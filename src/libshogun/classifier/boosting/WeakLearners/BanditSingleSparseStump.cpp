@@ -35,18 +35,18 @@
 
 #include "BanditSingleSparseStump.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/SortedData.h"
-#include "classifier/boosting/Algorithms/StumpAlgorithmLSHTC.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithmLSHTC.h"
-#include "classifier/boosting/WeakLearners/SingleSparseStumpLearner.h"
+#include "IO/Serialization.h"
+#include "IO/SortedData.h"
+#include "Algorithms/StumpAlgorithmLSHTC.h"
+#include "Algorithms/ConstantAlgorithmLSHTC.h"
+#include "WeakLearners/SingleSparseStumpLearner.h"
 
-#include "classifier/boosting/Bandits/Exp3G2.h"
+#include "Bandits/Exp3G2.h"
 
 #include <limits> // for numeric_limits<>
 #include <sstream> // for _id
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(SingleStump, BanditSingleSparseStump)
 	REGISTER_LEARNER(BanditSingleSparseStump)
@@ -170,7 +170,7 @@ namespace shogun {
 			//update the weights in the UCT tree
 
 			float edge = 0.0;
-			for( vector<sRates>::iterator itR = mu.begin(); itR != mu.end(); itR++ ) edge += ( itR->rPls - itR->rMin ); 
+			for ( vector<sRates>::iterator itR = mu.begin(); itR != mu.end(); itR++ ) edge += ( itR->rPls - itR->rMin );
 			double reward = this->getRewardFromEdge( edge );
 			_rewards[i] = reward;
 
@@ -289,4 +289,4 @@ namespace shogun {
 
 	// -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

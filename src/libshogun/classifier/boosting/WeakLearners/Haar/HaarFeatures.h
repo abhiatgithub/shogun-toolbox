@@ -40,9 +40,9 @@
 #ifndef __HAAR_FEATURES_H
 #define __HAAR_FEATURES_H
 
-#include "classifier/boosting/Defaults.h" // for MB_DEBUG
-#include "classifier/boosting/Utils/Utils.h" // for Rect
-#include "classifier/boosting/Others/Example.h"
+#include "Defaults.h" // for MB_DEBUG
+#include "Utils/Utils.h" // for Rect
+#include "Others/Example.h"
 
 #include <vector>
 #include <map>
@@ -50,7 +50,7 @@
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////
 

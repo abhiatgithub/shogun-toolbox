@@ -35,24 +35,24 @@
 
 #include <cmath> // for log and exp
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
+#include "WeakLearners/BaseLearner.h"
 
-#include "classifier/boosting/StrongLearners/AdaBoostMHLearner.h"
+#include "StrongLearners/AdaBoostMHLearner.h"
 //#include "StrongLearners/BrownBoostLearner.h"
 //#include "StrongLearners/LogitBoostLearner.h"
-#include "classifier/boosting/StrongLearners/FilterBoostLearner.h"
-#include "classifier/boosting/StrongLearners/ABMHLearnerYahoo.h"
+#include "StrongLearners/FilterBoostLearner.h"
+#include "StrongLearners/VJCascadeLearner.h"
 
-#include "classifier/boosting/Utils/Utils.h" // for is_zero
+#include "Utils/Utils.h" // for is_zero
 
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/IO/Serialization.h" // for the helper function "standardTag"
+#include "IO/InputData.h"
+#include "IO/Serialization.h" // for the helper function "standardTag"
 
-namespace shogun {
+namespace MultiBoost {
 
 	// -----------------------------------------------------------------------------
 
-	const float BaseLearner::_smallVal = 1e-7;
+	const float BaseLearner::_smallVal = 1e-3;
 	int    BaseLearner::_verbose = 1;
 	float BaseLearner::_smoothingVal = BaseLearner::_smallVal;
 
@@ -123,16 +123,10 @@ namespace shogun {
 		if ( sHypothesisName.compare( "AdaBoostMH" ) == 0)
 		{
 			sHypothesis = new AdaBoostMHLearner();
-		} else if ( sHypothesisName.compare( "BrownBoost" ) == 0 )
-		{
-			//sHypothesis = new BrownBoostLearner();
-		} else if ( sHypothesisName.compare( "LogitBoost" ) == 0 )
-		{
-			//sHypothesis = new LogitBoostLearner();
 		} else if ( sHypothesisName.compare( "FilterBoost" ) == 0 ) {
 			sHypothesis = new FilterBoostLearner();
-		} else if ( sHypothesisName.compare( "YahooBoost" ) == 0 ) {
-			sHypothesis = new ABMHLearnerYahoo();
+		}  else if ( sHypothesisName.compare( "VJcascade" ) == 0 ) {
+			sHypothesis = new VJCascadeLearner();
 		} else {
 			cout << "Unknown strong learner!!!!" << endl;
 			exit( -1 );
@@ -266,25 +260,19 @@ namespace shogun {
 			}
 		}
 		//cout << endl;
+		
+		edge = sumPos - sumNeg;
+		
 		if ( isNormalized )
 		{
 			if ( _pTrainingData->isFiltered() ) {
 				float sumEdge = sumNeg + sumPos;
-				if ( ! nor_utils::is_zero( sumEdge ) ) edge = ( sumPos - sumNeg ) / sumEdge; 
-			}
-		} else {
-			edge = sumPos - sumNeg;
+				if ( ! nor_utils::is_zero( sumEdge ) ) edge /= sumEdge; 
+			} 
 		}
-
 		return edge;
 	}
-
-  void LearnersRegs::addLearner(const string& learnerName, BaseLearner* pLearnerToRegister)
-  { 
-     _learners[learnerName] = pLearnerToRegister; 
-     pLearnerToRegister->setName(learnerName);
-  }
 	// -----------------------------------------------------------------------
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

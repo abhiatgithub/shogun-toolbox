@@ -36,10 +36,10 @@
 #include <iostream>
 #include <cmath> // for abs
 
-#include "classifier/boosting/IO/LSHTCParser.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "IO/LSHTCParser.h"
+#include "Utils/Utils.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	// ------------------------------------------------------------------------
 
@@ -481,4 +481,4 @@ namespace shogun {
 
 	// ------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

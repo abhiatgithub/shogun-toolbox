@@ -35,14 +35,14 @@
 
 #include "NameMap.h"
 
-#include "classifier/boosting/Defaults.h" // for MB_DEBUG
+#include "Defaults.h" // for MB_DEBUG
 #include <fstream> // for ifstream
 #include <iostream> // for cerr
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 // ------------------------------------------------------------------------
 
@@ -103,5 +103,5 @@ void NameMap::clear( void ) {
 // ------------------------------------------------------------------------
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 

@@ -42,10 +42,10 @@
 #ifndef __UCBV_HAAR_SINGLE_STUMP_LEARNER_H
 #define __UCBV_HAAR_SINGLE_STUMP_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/Haar/HaarLearner.h"
-#include "classifier/boosting/WeakLearners/SingleStumpLearner.h"
+#include "WeakLearners/Haar/HaarLearner.h"
+#include "WeakLearners/SingleStumpLearner.h"
 
-#include "classifier/boosting/Utils/Utils.h"
+#include "Utils/Utils.h"
 
 #include <map>
 
@@ -54,7 +54,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 	struct FeatureDataUCBV {
 		int T;
 		vector< float > X;
@@ -222,6 +222,6 @@ namespace shogun {
 		static int _numOfCalling; //number of the single stump learner have been called
 	};
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __HAAR_SINGLE_STUMP_LEARNER_H

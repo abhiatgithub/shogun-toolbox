@@ -41,9 +41,9 @@
 #ifndef __PRODUCT_LEARNER_H
 #define __PRODUCT_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
+#include "BaseLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
 
 #include <vector>
 #include <fstream>
@@ -54,7 +54,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A learner that loads a set of base learners, and boosts on the top of them. 
@@ -166,20 +166,16 @@ public:
    */
    virtual void subCopyState(BaseLearner *pBaseLearner);
 
-   virtual const char* get_name() const { return "ProductLearner"; }
-
 protected:
 
    vector<BaseLearner*> _baseLearners; //!< the learners of the product
    int _numBaseLearners;
-
-private:
    vector< vector<char> > _savedLabels; //!< original labels saved before run
 
 };
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __PRODUCT_LEARNER_H

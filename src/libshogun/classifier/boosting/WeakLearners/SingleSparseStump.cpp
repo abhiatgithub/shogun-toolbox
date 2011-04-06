@@ -35,15 +35,15 @@
 
 #include "SingleSparseStump.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/SortedData.h"
-#include "classifier/boosting/Algorithms/SparseStumpAlgorithm.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithm.h"
+#include "IO/Serialization.h"
+#include "IO/SortedData.h"
+#include "Algorithms/SparseStumpAlgorithm.h"
+#include "Algorithms/ConstantAlgorithm.h"
 
 #include <limits> // for numeric_limits<>
 #include <sstream> // for _id
 
-namespace shogun {
+namespace MultiBoost {
 
 //REGISTER_LEARNER_NAME(SingleStump, SingleSparseStump)
 REGISTER_LEARNER(SingleSparseStump)
@@ -152,14 +152,14 @@ float SingleSparseStump::run()
 
 // ------------------------------------------------------------------------------
 
-float SingleSparseStump::phi(float val, int /*classIdx*/) const
+float SingleSparseStump::phi(float val) const
 {
    if ( val < _threshold[1] )
-	   return +1;
-   //else if ( val > _threshold[1] )
-   else
 	   return -1;
-   //else return 0;
+   else if ( val > _threshold[2] )
+	   return 1;
+   else
+	   return 0;
 }
 
 // ------------------------------------------------------------------------------
@@ -230,4 +230,4 @@ void SingleSparseStump::subCopyState(BaseLearner *pBaseLearner)
 
 // -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

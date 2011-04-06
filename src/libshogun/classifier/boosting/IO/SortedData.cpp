@@ -35,14 +35,14 @@
 
 #include "SortedData.h"
 
-#include "classifier/boosting/Defaults.h" // for STABLE_SORT declaration
-#include "classifier/boosting/Utils/Utils.h" // for comparePairOnSecond
+#include "Defaults.h" // for STABLE_SORT declaration
+#include "Utils/Utils.h" // for comparePairOnSecond
 #include <algorithm> // for sort
 
 #include <limits>
 
 // ------------------------------------------------------------------------
-namespace shogun {
+namespace MultiBoost {
 
 void SortedData::load(const string& fileName, eInputType inputType, int verboseLevel)
 {
@@ -186,4 +186,4 @@ pair<vpIterator,vpIterator> SortedData::getFileteredBeginEnd(int colIdx) {
 
 // ------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

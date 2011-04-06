@@ -41,16 +41,16 @@
 #include <set>
 #include <functional>
 #include <math.h> //for pow
-#include "classifier/boosting/BanditsLS/GenericBanditAlgorithmLS.h"
-#include "classifier/boosting/BanditsLS/Exp3LS.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "GenericBanditAlgorithmLS.h"
+#include "Exp3LS.h"
+#include "Utils/Utils.h"
 
 
 using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /*
 The implementation is based on this article:
@@ -221,5 +221,5 @@ void Exp3GLS<BaseType,KeyType>::receiveReward( KeyType key, BaseType reward )
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 #endif

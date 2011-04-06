@@ -41,17 +41,16 @@
 #ifndef __ADABOOST_MH_LEARNER_H
 #define __ADABOOST_MH_LEARNER_H
 
-#include "classifier/boosting/StrongLearners/GenericStrongLearner.h"
-#include "classifier/boosting/Utils/Args.h"
+#include "StrongLearners/GenericStrongLearner.h"
+#include "Utils/Args.h"
 
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
-class GenericStrongLearner;
 class OutputInfo;
 class BaseLearner;
 class InputData;
@@ -84,7 +83,6 @@ public:
    * \date 10/11/2005
    */
    virtual void run(const nor_utils::Args& args);
-
   
    /**
    * Performs the classification using the AdaBoostMHClassifier.
@@ -180,9 +178,6 @@ public:
    */
    void printOutWeights( InputData* pData );
 
-   virtual const char* get_name() const { return "AdaBoostMHLearner"; }
-
-
 protected:
 
    /**
@@ -258,6 +253,6 @@ private:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ADABOOST_MH_LEARNER_H

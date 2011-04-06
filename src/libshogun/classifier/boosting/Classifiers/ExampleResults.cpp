@@ -33,13 +33,13 @@
 */
 
 
-#include "classifier/boosting/Classifiers/ExampleResults.h"
-#include "classifier/boosting/Utils/Utils.h" // for nor_utils::comparePairOnSecond
+#include "Classifiers/ExampleResults.h"
+#include "Utils/Utils.h" // for nor_utils::comparePairOnSecond
 #include <cassert>
 #include <functional> // for greater
 #include <algorithm> // for sort
 
-namespace shogun {
+namespace MultiBoost {
 
 // -------------------------------------------------------------------------
 // -------------------------------------------------------------------------
@@ -89,4 +89,4 @@ void ExampleResults::getRankedList( vector< pair<int, float> >& rankedList ) con
 
 // -------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

@@ -44,14 +44,14 @@
 
 #include <fstream>
 #include <sstream>
-#include "classifier/boosting/IO/GenericParser.h"
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Utils/ClassHierarchy.h"
+#include "GenericParser.h"
+#include "NameMap.h"
+#include "InputData.h"
+#include "Utils/ClassHierarchy.h"
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 	class SVMLightParser : public GenericParser
 	{
@@ -136,6 +136,6 @@ namespace shogun {
 	// -----------------------------------------------------------------------------
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ARFF_PARSER_H

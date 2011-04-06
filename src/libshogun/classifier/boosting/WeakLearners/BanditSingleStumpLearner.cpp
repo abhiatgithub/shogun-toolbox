@@ -36,27 +36,27 @@
 
 #include "BanditSingleStumpLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/SortedData.h"
-#include "classifier/boosting/Algorithms/StumpAlgorithm.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithm.h"
-#include "classifier/boosting/WeakLearners/SingleStumpLearner.h"
+#include "IO/Serialization.h"
+#include "IO/SortedData.h"
+#include "Algorithms/StumpAlgorithm.h"
+#include "Algorithms/ConstantAlgorithm.h"
+#include "WeakLearners/SingleStumpLearner.h"
 
 #include <limits> // for numeric_limits<>
 #include <sstream> // for _id
 #include <math.h> //for log
 #include <queue>
 
-#include "classifier/boosting/Bandits/Random.h"
-#include "classifier/boosting/Bandits/UCBK.h"
-#include "classifier/boosting/Bandits/UCBKV.h"
-#include "classifier/boosting/Bandits/UCBKRandomized.h"
-#include "classifier/boosting/Bandits/Exp3.h"
-#include "classifier/boosting/Bandits/Exp3G.h"
-#include "classifier/boosting/Bandits/Exp3G2.h"
-#include "classifier/boosting/Bandits/Exp3P.h"
+#include "Bandits/Random.h"
+#include "Bandits/UCBK.h"
+#include "Bandits/UCBKV.h"
+#include "Bandits/UCBKRandomized.h"
+#include "Bandits/Exp3.h"
+#include "Bandits/Exp3G.h"
+#include "Bandits/Exp3G2.h"
+#include "Bandits/Exp3P.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(SingleStump, BanditSingleStumpLearner)
 	REGISTER_LEARNER(BanditSingleStumpLearner)
@@ -67,9 +67,9 @@ namespace shogun {
 	//int BanditSingleStumpLearner::_K = 0; // number of columns to be selected
 
 	void BanditSingleStumpLearner::declareArguments(nor_utils::Args& args)
-	{
-		BaseLearner::declareArguments(args);
-
+	{		
+		FeaturewiseLearner::declareArguments(args);
+		
 		args.declareArgument("updaterule", 
 			"The update weights in the UCT can be the 1-sqrt( 1- edge^2 ) [edge]\n"
 			"  or the alpha [alphas]\n"
@@ -97,7 +97,7 @@ namespace shogun {
 
 	void BanditSingleStumpLearner::initLearningOptions(const nor_utils::Args& args)
 	{
-		BaseLearner::initLearningOptions(args);
+		FeaturewiseLearner::initLearningOptions(args);
 
 		string updateRule = "";
 		if ( args.hasArgument( "updaterule" ) )
@@ -432,23 +432,6 @@ namespace shogun {
 		_pTrainingData->loadIndexSet( oldIndexSet );
 	}
 
-	// ------------------------------------------------------------------------------
-
-	float BanditSingleStumpLearner::phi(float val, int /*classIdx*/) const
-	{
-		if (val > _threshold)
-			return +1;
-		else
-			return -1;
-	}
-
-	// ------------------------------------------------------------------------------
-
-	float BanditSingleStumpLearner::phi(InputData* pData,int pointIdx) const
-	{
-		return phi(pData->getValue(pointIdx,_selectedColumn),0);
-	}
-
 	// -----------------------------------------------------------------------
 
 	void BanditSingleStumpLearner::save(ofstream& outputStream, int numTabs)
@@ -526,25 +509,6 @@ namespace shogun {
 
 	// -----------------------------------------------------------------------
 
-	//void BanditSingleStumpLearner::getStateData( vector<float>& data, const string& /*reason*/, InputData* pData )
-	//{
-	//   const int numClasses = pData->getNumClasses();
-	//   const int numExamples = pData->getNumExamples();
-	//
-	//   // reason ignored for the moment as it is used for a single task
-	//   data.resize( numClasses + numExamples );
-	//
-	//   int pos = 0;
-	//
-	//   for (int l = 0; l < numClasses; ++l)
-	//      data[pos++] = _v[l];
-	//
-	//   for (int i = 0; i < numExamples; ++i)
-	//      data[pos++] = BanditSingleStumpLearner::phi( pData->getValue( i, _selectedColumn), 0 );
-	//}
-
-	// -----------------------------------------------------------------------
-
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 

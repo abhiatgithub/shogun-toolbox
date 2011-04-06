@@ -47,15 +47,15 @@
 #include <fstream>
 #include <string>
 #include <set>
-#include "classifier/boosting/Utils/Utils.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/Utils/StreamTokenizer.h"
+#include "Utils/Utils.h"
+#include "Utils/Args.h"
+#include "Utils/StreamTokenizer.h"
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * An abstract class for a generic bandit algorithms.
@@ -246,6 +246,6 @@ protected:
 	virtual void updateithValue( int armNum ) = 0;		
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif

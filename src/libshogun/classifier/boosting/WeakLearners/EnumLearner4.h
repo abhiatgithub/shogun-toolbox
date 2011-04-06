@@ -40,8 +40,8 @@
 #ifndef __ENUM_LEARNER4_H
 #define __ENUM_LEARNER4_H
 
-#include "classifier/boosting/WeakLearners/FeaturewiseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
+#include "FeaturewiseLearner.h"
+#include "Utils/Args.h"
 
 #include <vector>
 #include <fstream>
@@ -52,7 +52,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A \b single threshold decision stump learner. 
@@ -127,8 +127,6 @@ public:
    */
    virtual float phi(float val, int classIdx) const;
 
-   virtual const char* get_name() const { return "EnumLearner"; }
-
 protected:
 
    vector<float> _u;
@@ -136,6 +134,6 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ENUM_LEARNER_H

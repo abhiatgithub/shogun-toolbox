@@ -46,27 +46,33 @@ $Revision: 1.7 $
 #ifndef __GENERIC_STRONG_LEARNER_H
 #define __GENERIC_STRONG_LEARNER_H
 
+#include "Utils/Args.h"
+#ifdef SHOGUN
 #include "base/SGObject.h"
-#include "classifier/boosting/Utils/Args.h"
+#endif //SHOGUN
 
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
-
+namespace MultiBoost {
 /**
 * An abstract class for a generic meta-learner.
 * \see AdaBoostMHLearner
 * \date 20/3/2006
 */
-class GenericStrongLearner : public shogun::CSGObject
+#ifdef SHOGUN
+  class GenericStrongLearner : public shogun::CSGObject
+#else //SHOGUN
+class GenericStrongLearner
+#endif //SHOGUN
 {
 public:
 
+#ifdef SHOGUN
    GenericStrongLearner() : CSGObject() {}
-   virtual ~GenericStrongLearner(){}
+#endif //SHOGUN
 
    /**
    * Performs the learning process.
@@ -104,8 +110,10 @@ public:
    virtual void doLikelihoods(const nor_utils::Args& args) = 0;
 
    virtual void doROC(const nor_utils::Args& args) = 0;
+
+   virtual ~GenericStrongLearner(){}
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __GENERIC_MODEL_H

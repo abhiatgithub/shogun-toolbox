@@ -35,15 +35,15 @@
 
 #include "BanditTreeLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/Others/Example.h"
-#include "classifier/boosting/Utils/StreamTokenizer.h"
+#include "IO/Serialization.h"
+#include "Others/Example.h"
+#include "Utils/StreamTokenizer.h"
 
 #include <cmath>
 #include <limits>
 #include <queue>
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(Product, BanditTreeLearner)
 	REGISTER_LEARNER(BanditTreeLearner)
@@ -66,23 +66,7 @@ namespace shogun {
 	void BanditTreeLearner::initLearningOptions(const nor_utils::Args& args)
 	{
 		BanditLearner::initLearningOptions(args);
-
-		string baseLearnerName;
-		args.getValue("baselearnertype", 0, baseLearnerName);   
-		args.getValue("baselearnertype", 1, _numBaseLearners);   
-
-		// get the registered weak learner (type from name)
-		BaseLearner* pWeakHypothesisSource = 
-			BaseLearner::RegisteredLearners().getLearner(baseLearnerName);
-		pWeakHypothesisSource->initLearningOptions(args);
-
-		for( int ib = 0; ib < _numBaseLearners; ++ib ) {
-			_baseLearners.push_back(pWeakHypothesisSource->create());
-			_baseLearners[ib]->initLearningOptions(args);
-
-			vector< int > tmpVector( 2, -1 );
-			_idxPairs.push_back( tmpVector );
-		}
+		TreeLearner::initLearningOptions(args);
 	}
 
 	// ------------------------------------------------------------------------------
@@ -122,7 +106,7 @@ namespace shogun {
 
 		//declarations
 		NodePoint tmpNodePoint, nodeLeft, nodeRight;
-		BaseLearner* pPreviousBaseLearner = 0;
+		ScalarLearner* pPreviousBaseLearner = 0;
 		set< int > tmpIdx;
 		//this contains the current number of baselearners 
 		int ib = 0;
@@ -137,8 +121,8 @@ namespace shogun {
 
 		//train the first learner on the whole dataset 
 		_pTrainingData->clearIndexSet();
-		pPreviousBaseLearner = _baseLearners[0]->copyState();
-		float energy = static_cast< FeaturewiseLearner* >(pPreviousBaseLearner)->run( _armsForPulling );
+		pPreviousBaseLearner = dynamic_cast<ScalarLearner* >(_baseLearners[0]->copyState());
+		float energy = dynamic_cast< FeaturewiseLearner* >(pPreviousBaseLearner)->run( _armsForPulling );
 		if ( energy != energy )
 		{
 			if (_verbose > 2) {
@@ -147,10 +131,10 @@ namespace shogun {
 
 			delete pPreviousBaseLearner;
 			//cannot find better than constant learner
-			BaseLearner* pConstantWeakHypothesisSource = 
-				BaseLearner::RegisteredLearners().getLearner("ConstantLearner");
+			ScalarLearner* pConstantWeakHypothesisSource =
+				dynamic_cast<ScalarLearner*>(BaseLearner::RegisteredLearners().getLearner("ConstantLearner"));
 
-			BaseLearner* cLearner = pConstantWeakHypothesisSource->create();
+			ScalarLearner* cLearner = dynamic_cast<ScalarLearner*>(pConstantWeakHypothesisSource->create());
 			cLearner->setTrainingData(_pTrainingData);
 			float constantEnergy = cLearner->run();
 
@@ -430,9 +414,9 @@ namespace shogun {
 		energy = numeric_limits<float>::signaling_NaN();	
 
 		if ( ! _pTrainingData->isSamplesFromOneClass() ) {
-			BaseLearner* posLearner = _baseLearners[0]->copyState();
+			ScalarLearner* posLearner = dynamic_cast<ScalarLearner* >(_baseLearners[0]->copyState());
 
-			energy = static_cast< FeaturewiseLearner* >(posLearner)->run( _armsForPulling );
+			energy = dynamic_cast<FeaturewiseLearner* >(posLearner)->run( _armsForPulling );
 			if ( energy == energy ) {
 				bLearner._leftEdge = posLearner->getEdge();
 
@@ -447,7 +431,7 @@ namespace shogun {
 			BaseLearner* pConstantWeakHypothesisSource = 
 				BaseLearner::RegisteredLearners().getLearner("ConstantLearner");
 
-			BaseLearner* posLearner = pConstantWeakHypothesisSource->create();
+			ScalarLearner* posLearner = dynamic_cast<ScalarLearner* >(pConstantWeakHypothesisSource->create());
 			posLearner->setTrainingData(_pTrainingData);
 			float constantEnergy = posLearner->run();
 
@@ -460,10 +444,10 @@ namespace shogun {
 		energy = numeric_limits<float>::signaling_NaN();
 
 		if ( ! _pTrainingData->isSamplesFromOneClass() ) {
-			BaseLearner* negLearner = _baseLearners[0]->copyState();
+			ScalarLearner* negLearner = dynamic_cast<ScalarLearner* >(_baseLearners[0]->copyState());
 
 
-			energy = static_cast< FeaturewiseLearner* >(negLearner)->run( _armsForPulling );
+			energy = dynamic_cast< FeaturewiseLearner* >(negLearner)->run( _armsForPulling );
 			if ( energy == energy ) 
 			{
 				bLearner._rightEdge = negLearner->getEdge();
@@ -479,7 +463,7 @@ namespace shogun {
 			BaseLearner* pConstantWeakHypothesisSource = 
 				BaseLearner::RegisteredLearners().getLearner("ConstantLearner");
 
-			BaseLearner* negLearner =  pConstantWeakHypothesisSource->create();
+			ScalarLearner* negLearner =  dynamic_cast<ScalarLearner* >(pConstantWeakHypothesisSource->create());
 			negLearner->setTrainingData(_pTrainingData);
 			float constantEnergy = negLearner->run();
 
@@ -517,24 +501,7 @@ namespace shogun {
 	void BanditTreeLearner::load(nor_utils::StreamTokenizer& st)
 	{
 		BanditLearner::load(st);
-
-		_numBaseLearners = UnSerialization::seekAndParseEnclosedValue<int>(st, "numBaseLearners");
-		//   _numBaseLearners = 2;
-		_idxPairs.clear();
-		for(int ib = 0; ib < _numBaseLearners; ++ib) {
-			int leftChild = UnSerialization::seekAndParseEnclosedValue<int>(st, "leftChild");
-			int rightChild = UnSerialization::seekAndParseEnclosedValue<int>(st, "rightChild");
-			vector< int > p( 2, -1 );
-			p[0] = leftChild;
-			p[1] = rightChild;
-			_idxPairs.push_back( p );
-		}
-
-
-		for(int ib = 0; ib < _numBaseLearners; ++ib) {
-			UnSerialization::loadHypothesis(st, _baseLearners, _pTrainingData, _verbose);
-		}
-
+		TreeLearner::load(st);
 	}
 
 	// -----------------------------------------------------------------------
@@ -550,9 +517,9 @@ namespace shogun {
 
 		// deep copy
 		for(int ib = 0; ib < _numBaseLearners; ++ib)
-			pBanditTreeLearner->_baseLearners.push_back(_baseLearners[ib]->copyState());
+			pBanditTreeLearner->_baseLearners.push_back(dynamic_cast<ScalarLearner* >(_baseLearners[ib]->copyState()));
 	}
 
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

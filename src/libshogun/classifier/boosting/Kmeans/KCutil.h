@@ -21,7 +21,7 @@
 #ifndef KC_UTIL_H
 #define KC_UTIL_H
 
-#include "classifier/boosting/Kmeans/KCtree.h"			// kc-tree declarations
+#include "KCtree.h"			// kc-tree declarations
 
 //----------------------------------------------------------------------
 //  externally accessible functions

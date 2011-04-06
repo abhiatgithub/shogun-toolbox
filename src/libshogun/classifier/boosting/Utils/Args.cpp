@@ -224,7 +224,7 @@ void Args::printGroup(const string& groupName, ostream& out, int indSpaces) cons
 
 // -----------------------------------------------------------------------
 
-ArgsOutType Args::readArguments( int argc, const char* argv[] )
+ArgsOutType Args::readInlineArguments( int argc, const char* argv[] )
 {
    if (argc < 2 )
       return AOT_NO_ARGUMENTS;
@@ -414,7 +414,120 @@ string Args::getWrappedString(const string& str, int leftSpace, bool spacesInFir
 }
 
 // -----------------------------------------------------------------------
+    
+ArgsOutType Args::parseConfigFile( const string& configPath )
+{    
+    ifstream ifs(configPath.c_str());
+    if ( !ifs.is_open()) {
+        cerr << "ERROR : Cannot open configuration file <" << configPath << ">!" << endl;
+        exit(1);
+    }
+    
+    StreamTokenizer st(ifs, "\n\r");
+    
+    do {
+        // The current line
+        istringstream ss(st.next_token());
+        string argName;
+        ss >> argName;
+        
+        // if the line is a comment, just ignore
+        if (argName[0] == '#' || argName.size() == 0)
+            continue;        
+        
+        if ( _declArgs.find(argName) == _declArgs.end() )
+        {
+            cerr << "ERROR: Unknown argument " << argName << endl;
+            return AOT_UNKOWN_ARGUMENT;
+        }
+        
+        
+        //the options that the user provided
+        vector<string> commandList;
+        while (!ss.eof()) {
+            string cmd;
+            ss >> cmd;
+            commandList.push_back(cmd);
+        }
+        
+        bool argFound = false;  
+        int numVals = commandList.size();
+        
+        pair<mm_iterator, mm_iterator> range = _declArgs.equal_range(argName);
+        for (mm_iterator it = range.first; it != range.second; ++it)
+        {
+            if ( it->second->numValues == numVals )
+            {
+                argFound = true;
+                break;
+            }
+        }
+        
+        if (!argFound)
+        {
+            cerr << "ERROR: The number of values for argument <" << argName << "> is incorrect!\n"
+            << "Got:\n"
+            << " " << argName;
+            for (int i = 0; i < numVals; ++i)
+                cerr << " " << commandList[i];
+            
+            cerr << "\nExpected:\n";
+            mm_iterator lastElIt = range.second;
+            --lastElIt;
+            
+            for (mm_iterator it = range.first; it != range.second; ++it)
+            {
+                cerr << " " << argName << " "
+                << it->second->valuesNamesList << endl;
+                
+                if ( it != lastElIt )
+                    cout << "or" << endl;
+            }
+            
+            return AOT_INCORRECT_VALUES_NUMBER; 
+        }
+        
+        if (numVals == 0)
+            _resArgs[argName].push_back("");
+        else
+            _resArgs[argName] = commandList;
+        
+    } while (st.has_token());
+    return AOT_OK;
+}
+    
+// -----------------------------------------------------------------------
 
+ArgsOutType Args::readArguments( int argc, const char* argv[] )
+{
+    if (argc < 2 )
+        return AOT_NO_ARGUMENTS;
+    
+//    ArgsOutType res;
+
+    for (int i = 1; i < argc; ++i)
+    {
+        if ( hasArgumentDiscriminator(argv[i]) )
+        {
+            string argName = getArgumentString(argv[i]);
+            
+            if (argName.compare(_configFileString) == 0) {
+                if (i+1 < argc && !hasArgumentDiscriminator(argv[i+1])) {
+                    string configPath = argv[i+1];
+                    return parseConfigFile(configPath);
+                }
+                else {
+                    cerr << "ERROR : Please provide a correct name for the configuration file, right after " << _argDiscriminator << _configFileString << ".\n";
+                    return AOT_INCORRECT_VALUES_NUMBER; 
+                }
+
+            }
+        }
+    }    
+    return readInlineArguments(argc, argv);
+}
+    
+// -----------------------------------------------------------------------
 } // end of namespace nor_utils
 
 

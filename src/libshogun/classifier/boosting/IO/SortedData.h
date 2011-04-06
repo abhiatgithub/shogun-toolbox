@@ -40,14 +40,14 @@
 #ifndef __SORTED_DATA_H
 #define __SORTED_DATA_H
 
-#include "classifier/boosting/IO/InputData.h"
+#include "IO/InputData.h"
 
 #include <vector>
 #include <utility> // for pair
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,6 +138,6 @@ protected:
 };
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __SORTED_DATA_H

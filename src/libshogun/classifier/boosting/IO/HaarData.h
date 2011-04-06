@@ -45,9 +45,9 @@
 #ifndef __HAAR_DATA_H
 #define __HAAR_DATA_H
 
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/WeakLearners/Haar/HaarFeatures.h"
-#include "classifier/boosting/Utils/Utils.h" // for Rect
+#include "IO/InputData.h"
+#include "WeakLearners/Haar/HaarFeatures.h"
+#include "Utils/Utils.h" // for Rect
 
 #include <string>
 #include <map>
@@ -55,7 +55,7 @@
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 // A couple of useful typedefs
 typedef vector< pair<int, int> >::iterator       vpIntIterator; //!< Iterator on pair 
@@ -173,7 +173,7 @@ public:
 protected:
     bool checkInput(const string& line, int numColumns);
 
-   vector< int* >   _intImages;       //!< the data of the examples.
+   //vector< int* >   _intImages;       //!< the data of the examples.
 
    static short   _width;  //!< The width of the integral image.
    static short   _height; //!< The height of the integral image. 

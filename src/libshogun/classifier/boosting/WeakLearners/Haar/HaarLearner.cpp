@@ -34,17 +34,17 @@
 
 
 #include "HaarLearner.h"
-#include "classifier/boosting/WeakLearners/Haar/HaarFeatures.h"
-#include "classifier/boosting/Utils/StreamTokenizer.h"
+#include "WeakLearners/Haar/HaarFeatures.h"
+#include "Utils/StreamTokenizer.h"
 
-#include "classifier/boosting/IO/HaarData.h"
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/Utils/Args.h"
+#include "IO/HaarData.h"
+#include "IO/Serialization.h"
+#include "Utils/Args.h"
 
 #include <limits> // for numeric_limits
 #include <ctime> // for time
 
-namespace shogun {
+namespace MultiBoost {
 
 // ------------------------------------------------------------------------------
 

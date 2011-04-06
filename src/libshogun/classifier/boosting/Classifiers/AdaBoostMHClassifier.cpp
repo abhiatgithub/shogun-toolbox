@@ -33,21 +33,21 @@
 */
 
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Utils/Utils.h"
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/OutputInfo.h"
-#include "classifier/boosting/Classifiers/AdaBoostMHClassifier.h"
-#include "classifier/boosting/Classifiers/ExampleResults.h"
+#include "WeakLearners/BaseLearner.h"
+#include "IO/InputData.h"
+#include "Utils/Utils.h"
+#include "IO/Serialization.h"
+#include "IO/OutputInfo.h"
+#include "Classifiers/AdaBoostMHClassifier.h"
+#include "Classifiers/ExampleResults.h"
 
-#include "classifier/boosting/WeakLearners/SingleStumpLearner.h" // for saveSingleStumpFeatureData
+#include "WeakLearners/SingleStumpLearner.h" // for saveSingleStumpFeatureData
 
 #include <iomanip> // for setw
 #include <cmath> // for setw
 #include <functional>
 
-namespace shogun {
+namespace MultiBoost {
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
@@ -148,6 +148,8 @@ namespace shogun {
 			const int numExamples = pData->getNumExamples();
 			ofstream outRes(outResFileName.c_str());
 
+			outRes << "Instance" << '\t' << "Forecast" << '\t' << "Labels" << '\n';
+			
 			string exampleName;
 
 			for (int i = 0; i < numExamples; ++i)
@@ -159,9 +161,21 @@ namespace shogun {
 					outRes << i << '\t';
 				else
 					outRes << exampleName << '\t';
-
+				
 				// output the predicted class
-				outRes << pData->getClassMap().getNameFromIdx( results[i]->getWinner().first ) << endl;
+				outRes << pData->getClassMap().getNameFromIdx( results[i]->getWinner().first ) << '\t';
+				
+				outRes << '|';
+				
+				vector<Label>& labels = pData->getLabels(i);
+				for (vector<Label>::iterator lIt=labels.begin(); lIt != labels.end(); ++lIt) {
+					if (lIt->y>0) 
+					{
+						outRes << ' ' << pData->getClassMap().getNameFromIdx(lIt->idx);
+					}
+				}
+				
+				outRes << endl;
 			}
 
 			if (_verbose > 0)
@@ -334,7 +348,7 @@ namespace shogun {
 	// -------------------------------------------------------------------------
 
 	void AdaBoostMHClassifier::savePosteriors(const string& dataFileName, const string& shypFileName, 
-		const string& outFileName, int numIterations)
+		const string& outFileName, int numIterations, int period)
 	{
 		InputData* pData = loadInputData(dataFileName, shypFileName);
 
@@ -356,8 +370,11 @@ namespace shogun {
 		if (_verbose > 0)
 			cout << "Classifying..." << flush;
 
+		if ( period == 0 )
+			period=numIterations;
+		
 		// get the results
-		computeResults( pData, weakHypotheses, results, numIterations );
+		computeResults( pData, weakHypotheses, results, period );
 
 		const int numClasses = pData->getNumClasses();
 		const int numExamples = pData->getNumExamples();
@@ -367,6 +384,9 @@ namespace shogun {
 
 		if (_verbose > 0)
 			cout << "Output posteriors..." << flush;
+
+		if (period<numIterations)
+			outFile << period << endl;
 
 		for (int i = 0; i < numExamples; ++i)
 		{
@@ -383,6 +403,33 @@ namespace shogun {
 			outFile << '\n';
 		}
 
+		
+		for (int p=period; p<numIterations; p+=period )
+		{
+			if ( (p+period) > weakHypotheses.size() ) break;
+			
+			continueComputingResults(pData, weakHypotheses, results, p, p+period );
+			if ( _verbose > 0) {
+				cout << "Write out the posterios for iteration " << p << endl;
+			}
+			outFile << p+period << endl;
+			for (int i = 0; i < numExamples; ++i)
+			{
+				// output the name if it exists, otherwise the number
+				// of the example
+				exampleName = pData->getExampleName(i);
+				if ( !exampleName.empty() )
+					outFile << exampleName << ',';
+				
+				// output the posteriors
+				outFile << results[i]->getVotesVector()[0];
+				for (int l = 1; l < numClasses; ++l)
+					outFile << ',' << results[i]->getVotesVector()[l];
+				outFile << '\n';
+			}
+			
+		}
+		
 		if (_verbose > 0)
 			cout << "Done!" << endl;
 
@@ -708,9 +755,7 @@ namespace shogun {
 		const int numExamples = pData->getNumExamples();
 
 		if (_verbose > 0)
-			cout << "Done!" << endl;
-
-		const int colSize = 7;
+			cout << "Done!" << endl;		
 
 		vector< pair< int, double> > sortedExample( numExamples );
 		
@@ -994,10 +1039,10 @@ namespace shogun {
 			{
 				pOutInfo->outputIteration(t);
 				pOutInfo->outputError(pData, currWeakHyp);
-				
-				pOutInfo->outputBalancedError(pData, currWeakHyp);
+				pOutInfo->outTPRFPR(pData);
+				//pOutInfo->outputBalancedError(pData, currWeakHyp);
 				if ( ( t % 1 ) == 0 ) {
-					pOutInfo->outputROC(pData, currWeakHyp);
+					pOutInfo->outputROC(pData);
 				}
 
 				// Margins and edge requires an update of the weight,
@@ -1012,7 +1057,47 @@ namespace shogun {
 			delete pOutInfo;
 
 	}
+	
+	// -------------------------------------------------------------------------
+	
+	// Continue returns the results into ptRes for savePosteriors
+	// must be called the computeResult first!!!
+	void AdaBoostMHClassifier::continueComputingResults(InputData* pData, vector<BaseLearner*>& weakHypotheses, 
+											  vector< ExampleResults* >& results, int fromIteration, int toIteration)
+	{
+		assert( !weakHypotheses.empty() );
+		
+		const int numClasses = pData->getNumClasses();
+		const int numExamples = pData->getNumExamples();
+		
+						
+		// iterator over all the weak hypotheses
+		vector<BaseLearner*>::const_iterator whyIt;
+		int t;
 
+		for (whyIt = weakHypotheses.begin(), t = 0; 
+			 whyIt != weakHypotheses.end() && t < fromIteration; ++whyIt, ++t) {}
+		
+		// for every feature: 1..T
+		for (;whyIt != weakHypotheses.end() && t < toIteration; ++whyIt, ++t)
+		{
+			BaseLearner* currWeakHyp = *whyIt;
+			float alpha = currWeakHyp->getAlpha();
+			
+			// for every point
+			for (int i = 0; i < numExamples; ++i)
+			{
+				// a reference for clarity and speed
+				vector<float>& currVotesVector = results[i]->getVotesVector();
+				
+				// for every class
+				for (int l = 0; l < numClasses; ++l)
+					currVotesVector[l] += alpha * currWeakHyp->classify(pData, i, l);
+			}			
+		}
+		
+	}
+	
 	// -------------------------------------------------------------------------
 
 	float AdaBoostMHClassifier::getOverallError( InputData* pData, const vector<ExampleResults*>& results, 
@@ -1071,4 +1156,4 @@ namespace shogun {
 
 	// -------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

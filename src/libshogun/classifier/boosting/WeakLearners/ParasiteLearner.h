@@ -41,9 +41,9 @@
 #ifndef __PARASITE_LEARNER_H
 #define __PARASITE_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
+#include "BaseLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
 
 #include <vector>
 #include <fstream>
@@ -54,7 +54,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A learner that loads a set of base learners, and boosts on the top of them. 
@@ -179,8 +179,6 @@ public:
    */
    const vector<BaseLearner*>& getBaseLearners() const { return _baseLearners; }
 
-   virtual const char* get_name() const { return "ParasiteLearner"; }
-
 protected:
 
    static int _numBaseLearners; //!< the user specified number of base learners
@@ -196,6 +194,6 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __PARASITE_LEARNER_H

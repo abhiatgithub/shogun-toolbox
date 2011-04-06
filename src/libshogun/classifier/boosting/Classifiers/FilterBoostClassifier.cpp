@@ -34,21 +34,21 @@
 
 
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Utils/Utils.h"
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/OutputInfo.h"
-#include "classifier/boosting/Classifiers/FilterBoostClassifier.h"
-#include "classifier/boosting/Classifiers/ExampleResults.h"
+#include "WeakLearners/BaseLearner.h"
+#include "IO/InputData.h"
+#include "Utils/Utils.h"
+#include "IO/Serialization.h"
+#include "IO/OutputInfo.h"
+#include "Classifiers/FilterBoostClassifier.h"
+#include "Classifiers/ExampleResults.h"
 
-#include "classifier/boosting/WeakLearners/SingleStumpLearner.h" // for saveSingleStumpFeatureData
+#include "WeakLearners/SingleStumpLearner.h" // for saveSingleStumpFeatureData
 
 #include <iomanip> // for setw
 #include <cmath> // for setw
 #include <functional>
 
-namespace shogun {
+namespace MultiBoost {
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
@@ -996,9 +996,9 @@ namespace shogun {
 				pOutInfo->outputIteration(t);
 				pOutInfo->outputError(pData, currWeakHyp);
 				
-				pOutInfo->outputBalancedError(pData, currWeakHyp);
+				//pOutInfo->outputBalancedError(pData);
 				if ( ( t % 1 ) == 0 ) {
-					pOutInfo->outputROC(pData, currWeakHyp);
+					pOutInfo->outputROC(pData);
 				}
 
 				// Margins and edge requires an update of the weight,
@@ -1072,5 +1072,5 @@ namespace shogun {
 
 	// -------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 

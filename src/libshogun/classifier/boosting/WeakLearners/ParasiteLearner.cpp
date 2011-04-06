@@ -36,13 +36,13 @@
 #include "ParasiteLearner.h"
 #include "ConstantLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/Others/Example.h"
+#include "IO/Serialization.h"
+#include "Others/Example.h"
 
 #include <math.h>
 #include <limits>
 
-namespace shogun {
+namespace MultiBoost {
 
 //REGISTER_LEARNER_NAME(Parasite, ParasiteLearner)
 REGISTER_LEARNER(ParasiteLearner)
@@ -300,4 +300,4 @@ void ParasiteLearner::subCopyState(BaseLearner *pBaseLearner)
 
 // -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

@@ -42,7 +42,7 @@
 #include <cmath> // for sqrt
 
 // ------------------------------------------------------------------------
-namespace shogun {
+namespace MultiBoost {
 
 short HaarData::_width = 0;
 short HaarData::_height = 0;
@@ -53,8 +53,8 @@ HaarData::~HaarData()
 {
    // delete data
    vector<int*>::iterator it;
-   for (it = _intImages.begin(); it != _intImages.end(); ++it)
-      delete [] *it;
+   //for (it = _intImages.begin(); it != _intImages.end(); ++it)
+   //   delete [] *it;
 }
 
 // ------------------------------------------------------------------------
@@ -307,4 +307,4 @@ bool HaarData::checkInput(const string& line, int numColumns)
 }
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

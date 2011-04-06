@@ -40,8 +40,8 @@
 #include <list> 
 #include <functional>
 #include <math.h> //for pow
-#include "classifier/boosting/Bandits/GenericBanditAlgorithm.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "GenericBanditAlgorithm.h"
+#include "Utils/Utils.h"
 
 /*
 The Exp3G Algorithm was published in: 
@@ -55,7 +55,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 
 class Exp3G : public GenericBanditAlgorithm
@@ -100,7 +100,7 @@ protected:
 //////////////////////////////////////////////////////////////////////////////////
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif
 

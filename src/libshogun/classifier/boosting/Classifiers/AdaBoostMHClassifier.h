@@ -41,14 +41,14 @@
 #ifndef __ADABOOST_MH_CLASSIFIER_H
 #define __ADABOOST_MH_CLASSIFIER_H
 
-#include "classifier/boosting/Utils/Args.h"
+#include "Utils/Args.h"
 
 #include <string>
 #include <cassert>
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ public:
 
 
    void savePosteriors(const string& dataFileName, const string& shypFileName,
-                       const string& outFileName, int numIterations);
+                       const string& outFileName, int numIterations, int period=0);
 
 
    void saveLikelihoods(const string& dataFileName, const string& shypFileName,
@@ -218,6 +218,10 @@ protected:
    virtual void computeResults(InputData* pData, vector<BaseLearner*>& weakHypotheses, 
                        vector< ExampleResults* >& results, int numIterations );
 
+	
+   virtual void continueComputingResults(InputData* pData, vector<BaseLearner*>& weakHypotheses, 
+					   vector< ExampleResults* >& results, int fromIteration, int toIteration);
+	
    /**
    * Compute the overall error on the data.
    * \param pData A pointer to the data. Needed to get the actual class of 
@@ -269,6 +273,6 @@ private:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ADABOOST_MH_CLASSIFIER_H

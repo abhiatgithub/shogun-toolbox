@@ -41,10 +41,10 @@
 #define __SINGLE_SPARSE_STUMP_LEARNER_H
 
 //#include "WeakLearners/ClasswiseLearner.h"
-#include "classifier/boosting/WeakLearners/FeaturewiseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/IO/SortedData.h"
+#include "WeakLearners/FeaturewiseLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
+#include "IO/SortedData.h"
 
 #include <vector>
 #include <fstream>
@@ -55,11 +55,11 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A \b single threshold decision stump learner. 
-* There is ONE and ONE ONLY threshold here.
+* There is ONE and ONE ONLY threshold here. It works for sparse features.
 */
 class SingleSparseStumpLearner : public FeaturewiseLearner
 {
@@ -168,8 +168,6 @@ public:
    */
    virtual float phi(InputData* pData, int pointIdx) const;
 
-   virtual const char* get_name() const { return "SingleSparseStumpLearner"; }
-
 protected:
 
    /**
@@ -189,6 +187,6 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __SINGLE_STUMP_LEARNER_H

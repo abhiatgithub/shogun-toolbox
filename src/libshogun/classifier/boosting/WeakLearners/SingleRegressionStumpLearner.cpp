@@ -35,15 +35,15 @@
 
 #include "SingleRegressionStumpLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/SortedData.h"
-#include "classifier/boosting/Algorithms/RegressionStumpAlgorithm.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithm.h"
+#include "IO/Serialization.h"
+#include "IO/SortedData.h"
+#include "Algorithms/RegressionStumpAlgorithm.h"
+#include "Algorithms/ConstantAlgorithm.h"
 
 #include <limits> // for numeric_limits<>
 #include <sstream> // for _id
 
-namespace shogun {
+namespace MultiBoost {
 
 //REGISTER_LEARNER_NAME(SingleStump, SingleRegressionStumpLearner)
 REGISTER_LEARNER(SingleRegressionStumpLearner)
@@ -269,4 +269,4 @@ void SingleRegressionStumpLearner::subCopyState(BaseLearner *pBaseLearner)
 
 // -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

@@ -41,15 +41,15 @@
 #ifndef __FILTERBOOST_LEARNER_H
 #define __FILTERBOOST_LEARNER_H
 
-#include "classifier/boosting/StrongLearners/GenericStrongLearner.h"
-#include "classifier/boosting/Utils/Args.h"
+#include "StrongLearners/GenericStrongLearner.h"
+#include "Utils/Args.h"
 
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 	class OutputInfo;
 	class BaseLearner;
@@ -162,7 +162,6 @@ namespace shogun {
 		void printOutputInfo(OutputInfo* pOutInfo, int t, InputData* pTrainingData, 
 			InputData* pTestData, BaseLearner* pWeakHypothesis);
 
-		virtual const char* get_name() const { return "FilterBoostLearner"; }
 	protected:
 
 		/**
@@ -248,7 +247,7 @@ namespace shogun {
 		int _Cn;
 	};
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ADABOOST_MH_LEARNER_H
 

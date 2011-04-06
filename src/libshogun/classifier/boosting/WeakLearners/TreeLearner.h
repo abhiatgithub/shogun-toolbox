@@ -41,9 +41,11 @@
 #ifndef __TREE_LEARNER_H
 #define __TREE_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
+#include "WeakLearners/BaseLearner.h"
+#include "WeakLearners/ScalarLearner.h"
+
+#include "Utils/Args.h"
+#include "IO/InputData.h"
 
 #include <vector>
 #include <fstream>
@@ -54,7 +56,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -77,10 +79,10 @@ struct greater_first : std::binary_function<T,T,bool>
 };
 
 struct NodePoint {
-	BaseLearner* _learner;
+	ScalarLearner* _learner;
 
-	BaseLearner* _rightChild;
-	BaseLearner* _leftChild;
+	ScalarLearner* _rightChild;
+	ScalarLearner* _leftChild;
 	
 	set< int >   _rightChildIdxSet;
 	set< int >   _leftChildIdxSet;
@@ -103,7 +105,7 @@ typedef pair< float, NodePoint > floatInnerNode;
 /**
 * A learner that loads a set of base learners, and boosts on the top of them. 
 */
-class TreeLearner : public BaseLearner
+class TreeLearner : public virtual BaseLearner
 {
 public:
 
@@ -214,14 +216,12 @@ public:
 	   return ( ( _idxPairs[i][0] == -1 ) && ( _idxPairs[i][1] == -1 ) );
    }
 
-   virtual const char* get_name() const { return "TreeLearner"; }
-
 protected:
    void calculateChildrenAndEnergies( NodePoint& bLearner );
 
 
 
-   vector<BaseLearner*> _baseLearners; //!< the learners of the product
+   vector<ScalarLearner*> _baseLearners; //!< the learners of the product
    /*
    If the _baseLearners[i] is classified as 1 then _idxPairs[i].first is the next classifier to be used, otherwise _idxPairs[i].second 
    */
@@ -235,6 +235,6 @@ private:
 };
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __PRODUCT_LEARNER_H

@@ -35,17 +35,17 @@
 
 #include "DirichletSingleStumpLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/SortedData.h"
-#include "classifier/boosting/Algorithms/StumpAlgorithm.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithm.h"
+#include "IO/Serialization.h"
+#include "IO/SortedData.h"
+#include "Algorithms/StumpAlgorithm.h"
+#include "Algorithms/ConstantAlgorithm.h"
 
 #include <limits> // for numeric_limits<>
 #include <sstream> // for _id
 #include <ctime> // for initilazitaion of random number generator
 #include <iostream>
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(SingleStump, DirichletSingleStumpLearner)
 	REGISTER_LEARNER(DirichletSingleStumpLearner)
@@ -238,4 +238,4 @@ namespace shogun {
 
 	// -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

@@ -35,16 +35,16 @@
 
 #include "HaarMultiStumpLearner.h"
 
-#include "classifier/boosting/IO/HaarData.h"
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/WeakLearners/Haar/HaarFeatures.h" // for shortname->type and viceversa (see serialization)
+#include "IO/HaarData.h"
+#include "IO/Serialization.h"
+#include "WeakLearners/Haar/HaarFeatures.h" // for shortname->type and viceversa (see serialization)
 
-#include "classifier/boosting/Algorithms/StumpAlgorithm.h"
+#include "Algorithms/StumpAlgorithm.h"
 
 #include <limits> // for numeric_limits
 #include <ctime> // for time
 
-namespace shogun {
+namespace MultiBoost {
 
 REGISTER_LEARNER_NAME(HaarMultiStump, HaarMultiStumpLearner)
 

@@ -43,14 +43,14 @@
 #include <vector>
 #include <cassert>
 
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Others/Rates.h"
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithm.h"
+#include "IO/InputData.h"
+#include "Others/Rates.h"
+#include "IO/NameMap.h"
+#include "Algorithms/ConstantAlgorithm.h"
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 	//////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
@@ -470,6 +470,6 @@ namespace shogun {
 
 	//////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __STUMP_ALGORITHM_H

@@ -45,19 +45,19 @@
 #include <utility> // for pair
 #include <iosfwd> // for I/O
 
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/Defaults.h" // for MB_DEBUG
+#include "Utils/Args.h"
+#include "Defaults.h" // for MB_DEBUG
 
 //#include "GenericParser.h"
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/Others/Example.h"
+#include "NameMap.h"
+#include "Others/Example.h"
 
 //#include "Parser.h"
 #include <cassert>
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////

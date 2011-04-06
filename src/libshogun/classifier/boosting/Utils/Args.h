@@ -47,9 +47,13 @@
 #include <set>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <stdlib.h> //for exit function when we are using gcc
+#include "StreamTokenizer.h"
+#ifdef SHOGUN
 #include "base/SGObject.h"
+#endif //SHOGUN
 
 using namespace std;
 
@@ -104,7 +108,11 @@ enum ArgsOutType
 * printGroup().
 * \date 10/11/2005
 */
+#ifdef SHOGUN
 class Args : public shogun::CSGObject
+#else //SHOGUN
+class Args
+#endif
 {
 public:
 
@@ -112,7 +120,7 @@ public:
    * The constructor. Set the current group to "general".
    * \date 10/11/2005
    */
-   Args() : _currentGroup("general"), _maxColumns(60), _argDiscriminator("") {}
+   Args() : _currentGroup("general"), _maxColumns(60), _argDiscriminator(""), _configFileString("configfile"){}
 
    /**
    * The destructor. Deallocates the memory of each Argument object.
@@ -227,6 +235,22 @@ group1:
    * \date 16/11/2005
    */
    ArgsOutType	 readArguments( int argc, const char* argv[] );
+    
+    /**
+     * Read the inline argument (as opposed to arguments read from the config file)
+     * \param argc The number of arguments (standard C in main()).
+     * \param argv The arguments (standard C in main()).
+     * \return An enum that report on the result of the reading.
+     * \date 16/09/2010
+    */
+   ArgsOutType	 readInlineArguments( int argc, const char* argv[] );
+    
+    /* Parse arguments from a config file
+     * \param configPath The path to the configuration file
+     * \return An enum that report on the result of the reading.     
+     * \date 16/09/2010
+     */
+    ArgsOutType parseConfigFile( const string& configPath );
 
    /**
    * Ask if an argument has been provided via command line.
@@ -328,9 +352,6 @@ group1:
       return val;
    }
 
-	/** @return object name */
-	inline virtual const char* get_name() const { return "Args"; }
-
 private:
 
    /**
@@ -426,6 +447,7 @@ A simple test of wrapping
       int numValues; //!< The number of values that follow the argument.
       string valuesNamesList; //!< The names list of the values that will be printed with the argument, when help is requested. 
    };
+        
 
    /**
    * The current group. 
@@ -433,6 +455,12 @@ A simple test of wrapping
    * \see declareArgument
    */
    string  _currentGroup;
+    
+    
+    /**
+     * If this command is provided, all the arguments will be read from a config file path that follows
+     */
+    string _configFileString;
 
    /**
    * The maximum number of column (in a loosely sense) allowed to be printed.

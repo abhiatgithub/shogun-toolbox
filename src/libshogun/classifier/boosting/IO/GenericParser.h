@@ -44,13 +44,13 @@
 #include <vector>
 #include <algorithm>
 
-#include "classifier/boosting/Others/Example.h"
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/IO/InputData.h"
+#include "Others/Example.h"
+#include "NameMap.h"
+#include "InputData.h"
 
 using namespace std;
 
-namespace shogun
+namespace MultiBoost
 {
 
 ////////////////////////////////////////////////////////////////

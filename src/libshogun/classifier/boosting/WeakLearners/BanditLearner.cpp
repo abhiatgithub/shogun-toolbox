@@ -35,12 +35,12 @@
 
 
 #include "BanditLearner.h"
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/BanditsLS/Exp3LS.h"
-#include "classifier/boosting/BanditsLS/Exp3GLS.h"
-#include "classifier/boosting/BanditsLS/UCTLS.h"
+#include "IO/Serialization.h"
+#include "BanditsLS/Exp3LS.h"
+#include "BanditsLS/Exp3GLS.h"
+#include "BanditsLS/UCTLS.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	// -----------------------------------------------------------------------
 	void BanditLearner::declareArguments(nor_utils::Args& args) 
@@ -285,4 +285,4 @@ namespace shogun {
 	}
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

@@ -38,14 +38,14 @@
 #ifndef __BANDIT_LEARNER_H
 #define __BANDIT_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
+#include "WeakLearners/BaseLearner.h"
 //#include "WeakLearners/TreeLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Utils/UCTutils.h"
-#include "classifier/boosting/BanditsLS/GenericBanditAlgorithmLS.h"
-#include "classifier/boosting/BanditsLS/Exp3LS.h"
-#include "classifier/boosting/BanditsLS/Exp3GLS.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
+#include "Utils/UCTutils.h"
+#include "BanditsLS/GenericBanditAlgorithmLS.h"
+#include "BanditsLS/Exp3LS.h"
+#include "BanditsLS/Exp3GLS.h"
 
 
 #include <vector>
@@ -57,7 +57,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 	//////////////////////////////////////////////////////////////////////////
 	enum BanditAlgoLS
@@ -71,7 +71,7 @@ namespace shogun {
 		BA_UCT_LS
 	};
 
-	class BanditLearner : public BaseLearner
+	class BanditLearner : public virtual BaseLearner
 	{
 	protected:
 		typedef Exp3LS<double,string> Exp3LSDoubleString;
@@ -185,7 +185,7 @@ namespace shogun {
 		////////////////////////////////////////////////////////////////////////////
 	};
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 
 #endif // __PRODUCT_LEARNER_H

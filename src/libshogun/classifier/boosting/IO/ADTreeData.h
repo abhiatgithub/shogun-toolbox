@@ -40,11 +40,11 @@
 #ifndef __ADTREE_DATA_H
 #define __ADTREE_DATA_H
 
-#include "classifier/boosting/IO/SortedData.h"
+#include "IO/SortedData.h"
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 class BaseLearner;
 class ADTreePredictionNode;
@@ -83,6 +83,6 @@ protected:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ADTREE_DATA_H

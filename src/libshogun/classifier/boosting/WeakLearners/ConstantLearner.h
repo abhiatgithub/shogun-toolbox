@@ -40,9 +40,11 @@
 #ifndef __CONSTANT_LEARNER_H
 #define __CONSTANT_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/AbstainableLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
+#include "WeakLearners/AbstainableLearner.h"
+#include "WeakLearners/ScalarLearner.h"
+
+#include "Utils/Args.h"
+#include "IO/InputData.h"
 
 #include <vector>
 #include <fstream>
@@ -53,13 +55,13 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A \b single threshold decision stump learner. 
 * There is ONE and ONE ONLY threshold here.
 */
-class ConstantLearner : public AbstainableLearner
+class ConstantLearner : public virtual AbstainableLearner, public virtual ScalarLearner
 {
 public:
 
@@ -107,7 +109,6 @@ public:
    */
    virtual void getStateData( vector<float>& data, const string& /*reason = ""*/, InputData* pData = 0 );
 
-   virtual const char* get_name() const { return "ConstantLearner"; }
 protected:
 
    /**
@@ -121,10 +122,12 @@ protected:
    * \see classify
    */
    virtual float phi(InputData* pData, int idx, int classIdx) const { return 1; }
+
+   virtual float cut(  InputData* pData, int idx ) const { return 1; }
 };
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __CONSTANT_LEARNER_H

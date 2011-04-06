@@ -37,12 +37,12 @@
 #ifndef __BANDIT_TREE_LEARNER_H
 #define __BANDIT_TREE_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/WeakLearners/BanditLearner.h"
-#include "classifier/boosting/WeakLearners/TreeLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Utils/UCTutils.h"
+#include "WeakLearners/BaseLearner.h"
+#include "WeakLearners/BanditLearner.h"
+#include "WeakLearners/TreeLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
+#include "Utils/UCTutils.h"
 //#include "BanditsLS/GenericBanditAlgorithmLS.h"
 
 
@@ -56,13 +56,13 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 	//////////////////////////////////////////////////////////////////////////
 	/**
 	* A learner that loads a set of base learners, and boosts on the top of them. 
 	*/
-	class BanditTreeLearner : public BanditLearner
+	class BanditTreeLearner : public virtual BanditLearner, public virtual TreeLearner
 	{
 	public:
 
@@ -71,7 +71,7 @@ namespace shogun {
 		* The constructor. It initializes _numBaseLearners to -1
 		* \date 26/05/2007
 		*/
-		BanditTreeLearner() : BanditLearner(), _numBaseLearners(-1) { }
+		BanditTreeLearner() : BanditLearner(), TreeLearner() { }
 
 		/**
 		* The destructor. Must be declared (virtual) for the proper destruction of 
@@ -115,7 +115,7 @@ namespace shogun {
 		virtual BaseLearner* subCreate() 
 		{ 
 			BaseLearner* retLearner = new BanditTreeLearner();
-			static_cast< BanditLearner* >(retLearner)->setBanditAlgoObject( static_cast< BanditLearner* >(this)->getBanditAlgoObject() );
+			dynamic_cast< BanditLearner* >(retLearner)->setBanditAlgoObject( static_cast< BanditLearner* >(this)->getBanditAlgoObject() );
 			return retLearner;  
 		}
 		
@@ -178,18 +178,13 @@ namespace shogun {
 			return ( ( _idxPairs[i][0] == -1 ) && ( _idxPairs[i][1] == -1 ) );
 		}
 
-        virtual const char* get_name() const { return "BanditTreeLearner"; }
-
 	protected:
 		//extend a point in the tree
 		void calculateChildrenAndEnergies( NodePoint& bLearner );
 
-		vector<BaseLearner*> _baseLearners; //!< the learners of the tree
-		vector< vector<int> > _idxPairs; // structure of the tree
-		int _numBaseLearners;   
 	};
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __PRODUCT_LEARNER_H

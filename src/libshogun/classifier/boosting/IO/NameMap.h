@@ -50,7 +50,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A class to represent name (classes, enum attributes) map.
@@ -117,7 +117,7 @@ private:
    int _numRegNames; //!< The number of the names registered. 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // NAME_MAP_H
 

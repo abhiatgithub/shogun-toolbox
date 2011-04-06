@@ -40,12 +40,12 @@
 #include <list> 
 #include <functional>
 #include <math.h> //for log
-#include "classifier/boosting/Bandits/GenericBanditAlgorithm.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "GenericBanditAlgorithm.h"
+#include "Utils/Utils.h"
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 /*
 class StorageElement{
 protected:
@@ -96,7 +96,7 @@ protected:
 	virtual void updateithValue( int i );	
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif
 

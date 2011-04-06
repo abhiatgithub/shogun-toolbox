@@ -46,20 +46,20 @@
 #include <iosfwd> // for I/O
 #include <limits> 
 
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/Defaults.h" // for MB_DEBUG
+#include "Utils/Args.h"
+#include "Defaults.h" // for MB_DEBUG
 
 //#include "GenericParser.h"
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/Others/Example.h"
-#include "classifier/boosting/IO/RawData.h"
+#include "NameMap.h"
+#include "Others/Example.h"
+#include "RawData.h"
 
 //#include "Parser.h"
 #include <cassert>
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,7 +193,7 @@ namespace shogun {
 				_subset.clear();
 				for ( set<int>::iterator it = _usedIndices.begin(); it != _usedIndices.end(); it++ ) {
 					//Example e = this->getExample( *it );
-					_subset.push_back( this->getExample( *it ) );
+					_subset.push_back( this->_pData->getExample( *it ) );
 				}
 				return _subset;
 			}
@@ -283,6 +283,6 @@ namespace shogun {
 		vector<Example> _subset;
 	};
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __INPUT_pData_H

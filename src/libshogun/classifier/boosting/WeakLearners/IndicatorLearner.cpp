@@ -36,9 +36,9 @@
 #include "IndicatorLearner.h"
 #include <limits>
 
-#include "classifier/boosting/IO/Serialization.h"
+#include "IO/Serialization.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(SingleStump, IndicatorLearner)
 	REGISTER_LEARNER(IndicatorLearner)
@@ -50,7 +50,7 @@ namespace shogun {
 		const int numClasses = _pTrainingData->getNumClasses();
 		const int numColumns = _pTrainingData->getNumAttributes();
 		const int numExamples = _pTrainingData->getNumExamples();
-
+		
 		// set the smoothing value to avoid numerical problem
 		// when theta=0.
 		setSmoothingVal( 1.0 / (float)_pTrainingData->getNumExamples() * 0.01 );
@@ -215,9 +215,14 @@ namespace shogun {
 			}
 		}
 
+		if (_selectedColumn>-1)
+		{
+			_id = _pTrainingData->getAttributeNameMap().getNameFromIdx(_selectedColumn);
+			return bestEnergy;
+		} else {
+			return bestEnergy = numeric_limits<float>::signaling_NaN();
+		}
 
-		_id = _pTrainingData->getAttributeNameMap().getNameFromIdx(_selectedColumn);
-		return bestEnergy;
 
 	}
 
@@ -395,7 +400,7 @@ namespace shogun {
 
 	// ------------------------------------------------------------------------------
 
-	float IndicatorLearner::phi(float val, int /*classIdx*/) const
+	float IndicatorLearner::phi(float val) const
 	{
 		return _u[static_cast<int>(val)];
 	}
@@ -437,4 +442,4 @@ namespace shogun {
 		pIndicatorLearner->_u = _u;
 	}
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

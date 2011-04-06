@@ -42,17 +42,17 @@
 #ifndef __HAAR_MULTI_STUMP_LEARNER_H
 #define __HAAR_MULTI_STUMP_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/Haar/HaarLearner.h"
-#include "classifier/boosting/WeakLearners/MultiStumpLearner.h"
+#include "WeakLearners/Haar/HaarLearner.h"
+#include "WeakLearners/MultiStumpLearner.h"
 
-#include "classifier/boosting/Utils/Utils.h"
+#include "Utils/Utils.h"
 
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 class HaarData;
 
@@ -188,6 +188,6 @@ private:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __HAAR_MULTI_STUMP_LEARNER_H

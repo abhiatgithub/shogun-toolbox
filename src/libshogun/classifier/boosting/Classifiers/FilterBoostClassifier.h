@@ -41,14 +41,14 @@
 #ifndef __FILTERBOOST__CLASSIFIER_H
 #define __FILTERBOOST__CLASSIFIER_H
 
-#include "classifier/boosting/Utils/Args.h"
+#include "Utils/Args.h"
 
 #include <string>
 #include <cassert>
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -269,7 +269,7 @@ private:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ADABOOST_CLASSIFIER_H
 

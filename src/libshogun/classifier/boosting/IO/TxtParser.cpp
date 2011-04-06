@@ -37,10 +37,10 @@
 #include <iostream>
 #include <sstream>
 
-#include "classifier/boosting/IO/TxtParser.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "IO/TxtParser.h"
+#include "Utils/Utils.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 // ------------------------------------------------------------------------
 

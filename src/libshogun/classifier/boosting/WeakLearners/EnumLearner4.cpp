@@ -36,9 +36,9 @@
 #include "EnumLearner4.h"
 #include <limits>
 
-#include "classifier/boosting/IO/Serialization.h"
+#include "IO/Serialization.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(SingleStump, EnumLearner4)
 	REGISTER_LEARNER(EnumLearner4)
@@ -452,4 +452,4 @@ namespace shogun {
 		pEnumLearner4->_u = _u;
 	}
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

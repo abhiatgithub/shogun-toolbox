@@ -41,10 +41,10 @@
 #ifndef __TREE_LEARNER_UCT_H
 #define __TREE_LEARNER_UCT_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Utils/UCTutils.h"
+#include "WeakLearners/BaseLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
+#include "Utils/UCTutils.h"
 
 #include <vector>
 #include <fstream>
@@ -55,7 +55,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -221,7 +221,6 @@ namespace shogun {
 		}
 
 		//virtual double getEdge();
-        virtual const char* get_name() const { return "TreeLearnerUCT"; }
 
 	protected:
 		void calculateChildrenAndEnergies( NodePoint& bLearner, int depthIndex );
@@ -243,6 +242,6 @@ namespace shogun {
 	};
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __PRODUCT_LEARNER_H

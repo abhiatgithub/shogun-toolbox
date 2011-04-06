@@ -45,10 +45,10 @@
 #ifndef __ABSTAINABLE_LEARNER_H
 #define __ABSTAINABLE_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Others/Rates.h"
+#include "WeakLearners/BaseLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
+#include "Others/Rates.h"
 
 #include <vector>
 #include <fstream>
@@ -58,7 +58,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * \file AbstainableLearner.h It represents all weak learners that explicitly
@@ -67,7 +67,7 @@ namespace shogun {
 *
 * \date 19/09/06
 */
-class AbstainableLearner : public BaseLearner
+class AbstainableLearner : public virtual BaseLearner
 {
 public:
    vector<float> _v;
@@ -319,6 +319,6 @@ protected:
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ABSTAINABLE_LEARNER_H

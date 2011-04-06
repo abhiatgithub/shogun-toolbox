@@ -35,12 +35,12 @@
 
 #include "ConstantLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithm.h"
+#include "IO/Serialization.h"
+#include "Algorithms/ConstantAlgorithm.h"
 
 #include <limits> // for numeric_limits<>
 
-namespace shogun {
+namespace MultiBoost {
 
 
 //REGISTER_LEARNER_NAME(Constant, ConstantLearner)
@@ -97,4 +97,4 @@ void ConstantLearner::getStateData( vector<float>& data, const string& /*reason*
 
 // -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

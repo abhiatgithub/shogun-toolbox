@@ -37,14 +37,14 @@
 #define __EXAMPLE_RESULTS_H
 
 #include <vector>
-#include "classifier/boosting/Others/Example.h" // for Example
+#include "Others/Example.h" // for Example
 
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * Holds the results per example.
@@ -123,6 +123,6 @@ private:
 
 }; // ExampleResults
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __EXAMPLE_RESULTS_H

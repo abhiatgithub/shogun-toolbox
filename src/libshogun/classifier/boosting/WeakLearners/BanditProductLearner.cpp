@@ -36,15 +36,15 @@
 
 #include "BanditProductLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/Others/Example.h"
-#include "classifier/boosting/Utils/StreamTokenizer.h"
-#include "classifier/boosting/BanditsLS/Exp3LS.h"
+#include "IO/Serialization.h"
+#include "Others/Example.h"
+#include "Utils/StreamTokenizer.h"
+#include "BanditsLS/Exp3LS.h"
 
 #include <math.h>
 #include <limits>
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(Product, BanditProductLearner)
 	REGISTER_LEARNER(BanditProductLearner)
@@ -161,7 +161,7 @@ namespace shogun {
 				}
 			}
 			pPreviousBaseLearner = _baseLearners[ib]->copyState();
-			energy = static_cast< FeaturewiseLearner* >(_baseLearners[ib])->run( _armsForPulling );
+			energy = dynamic_cast< FeaturewiseLearner* >(_baseLearners[ib])->run(_armsForPulling );
 			// check if it is signailing_nan
 			if ( energy != energy )
 			{
@@ -289,4 +289,4 @@ namespace shogun {
 
 	// -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

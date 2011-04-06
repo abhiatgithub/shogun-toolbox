@@ -37,7 +37,7 @@
 #include <limits>
 #include <set>
 
-namespace shogun {
+namespace MultiBoost {
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 
@@ -86,5 +86,5 @@ void Random::updateithValue( int i )
 //----------------------------------------------------------------
 
 
-} // end namespace shogun
+} // end namespace MultiBoost
 

@@ -35,14 +35,14 @@
 
 #include "ProductLearner.h"
 
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/Others/Example.h"
-#include "classifier/boosting/Utils/StreamTokenizer.h"
+#include "IO/Serialization.h"
+#include "Others/Example.h"
+#include "Utils/StreamTokenizer.h"
 
 #include <math.h>
 #include <limits>
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(Product, ProductLearner)
 	REGISTER_LEARNER(ProductLearner)
@@ -259,4 +259,4 @@ namespace shogun {
 
 	// -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

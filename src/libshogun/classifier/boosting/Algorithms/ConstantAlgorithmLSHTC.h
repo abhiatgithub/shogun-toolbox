@@ -39,12 +39,12 @@
 #include <vector>
 #include <cassert>
 
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Others/Rates.h"
+#include "IO/InputData.h"
+#include "Others/Rates.h"
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +76,6 @@ public:
                         vector<sRates>* pMu, vector<float>* pV);
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __CONSTANT_ALGORITHM_H

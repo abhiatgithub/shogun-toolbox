@@ -36,10 +36,10 @@
 #include <iostream>
 #include <cmath> // for abs
 
-#include "classifier/boosting/IO/ArffParser.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "IO/ArffParser.h"
+#include "Utils/Utils.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	// ------------------------------------------------------------------------
 
@@ -510,4 +510,4 @@ namespace shogun {
 
 	// ------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

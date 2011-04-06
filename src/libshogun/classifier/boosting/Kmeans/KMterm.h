@@ -21,7 +21,7 @@
 #ifndef KM_TERM_H
 #define KM_TERM_H
 
-#include "classifier/boosting/Kmeans/KMeans.h"
+#include "KMeans.h"
 
 //------------------------------------------------------------------------
 //  KMterm - termination condition

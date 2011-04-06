@@ -51,7 +51,7 @@
 
 using namespace std;
 
-namespace shogun
+namespace MultiBoost
 {
 
 // -----------------------------------------------------------------------------
@@ -222,6 +222,6 @@ private:
    //void print(ostream &);
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // 

@@ -4,19 +4,19 @@
 #include <limits>
 #include <iomanip> // setprecision
 
-#include "classifier/boosting/Utils/Utils.h" // for addAndCheckExtension
-#include "classifier/boosting/Defaults.h" // for defaultLearner
-#include "classifier/boosting/IO/OutputInfo.h"
-#include "classifier/boosting/Others/Rates.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/IO/Serialization.h" // to save the found strong hypothesis
+#include "Utils/Utils.h" // for addAndCheckExtension
+#include "Defaults.h" // for defaultLearner
+#include "IO/OutputInfo.h"
+#include "Others/Rates.h"
+#include "IO/InputData.h"
+#include "IO/Serialization.h" // to save the found strong hypothesis
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/StrongLearners/FilterBoostLearner.h"
+#include "WeakLearners/BaseLearner.h"
+#include "StrongLearners/FilterBoostLearner.h"
 
-#include "classifier/boosting/Classifiers/FilterBoostClassifier.h"
+#include "Classifiers/FilterBoostClassifier.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	// -----------------------------------------------------------------------------------
 
@@ -86,6 +86,14 @@ namespace shogun {
 		// --constant: check constant learner in each iteration
 		if ( args.hasArgument("constant") )
 			_withConstantLearner = true;
+
+		// Set the value of the sample size
+		if ( args.hasArgument("Cn") )
+		{
+			args.getValue("Cn", 0, _Cn);
+			if (_verbose > 1)
+				cout << "--> Resampling size: " << _Cn << endl;
+		}
 
 	}
 
@@ -778,5 +786,5 @@ namespace shogun {
 
 
 	}
-} // end of namespace shogun
+} // end of namespace MultiBoost
 

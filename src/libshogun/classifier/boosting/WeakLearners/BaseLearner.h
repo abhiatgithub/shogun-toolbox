@@ -44,22 +44,24 @@
 #include <algorithm>
 #include <vector>
 
+#include "Utils/Args.h"
+#include "Utils/StreamTokenizer.h"
+#ifdef SHOGUN
 #include "base/SGObject.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/Utils/StreamTokenizer.h"
+#include "base/class_list.h"
+#endif //SHOGUN
 
 using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 class BaseLearner;
 class InputData;
 class GenericStrongLearner;
 
-   //////////////////////////////////////////////////////////////////////////
 /**
 * Holds the information about the registered learners. Works pretty
 * much like a class factory.
@@ -68,64 +70,91 @@ class GenericStrongLearner;
 * \see subCreate()
 * \date 21/11/2005
 */
+#ifdef SHOGUN
 class LearnersRegs : public CSGObject
+#else //SHOGUN
+class LearnersRegs
+#endif //SHOGUN
 {
-public:
+   public:
 
-  /**
-  * Register a weak learner.
-  * \param learnerName The name of the learner
-  * \param pLearnerToRegister The allocated learner to register.
-  * \warning To be used only with macro REGISTER_LEARNER()!
-  * \date 21/11/2005
-  */
-  void addLearner(const string& learnerName, BaseLearner* pLearnerToRegister);
+      /**
+      * Register a weak learner.
+      * \param learnerName The name of the learner
+      * \param pLearnerToRegister The allocated learner to register.
+      * \warning To be used only with macro REGISTER_LEARNER()!
+      * \date 21/11/2005
+      */
+      void addLearner(const string& learnerName, BaseLearner* pLearnerToRegister)
+      { 
+#ifndef SHOGUN
+         _learners[learnerName] = pLearnerToRegister; 
+         pLearnerToRegister->setName(learnerName);
+#endif SHOGUN
+      }
 
-  /**
-  * Check if a given learner has been registered.
-  * \param learnerName The name of the learner.
-  * \date 21/11/2005
-  */
-  bool hasLearner(const string& learnerName)
-  { return ( _learners.find(learnerName) != _learners.end() ); }
+      /**
+      * Check if a given learner has been registered.
+      * \param learnerName The name of the learner.
+      * \date 21/11/2005
+      */
+      bool hasLearner(const string& learnerName)
+      { 
+#ifdef SHOGUN
+	string mblearner = "MB_" + learnerName;
+	return new_sgserializable(mblearner.c_str(), PT_NOT_GENERIC) != NULL;
+#else //SHOGUN
+	return ( _learners.find(learnerName) != _learners.end() ); 
+#endif //SHOGUN
+      }
 
-  /**
-  * Return the allocated learner object.
-  * \param learnerName The name of the learner.
-  * \date 21/11/2005
-  */
-  BaseLearner* getLearner(const string& learnerName)
-  { return _learners[learnerName]; }
+      /**
+      * Return the allocated learner object.
+      * \param learnerName The name of the learner.
+      * \date 21/11/2005
+      */
+      BaseLearner* getLearner(const string& learnerName)
+      { 
+#ifdef SHOGUN
+	string mblearner = "MB_" + learnerName;
+	return (BaseLearner*) new_sgserializable(mblearner.c_str(), PT_NOT_GENERIC);
+#else //SHOGUN
+	return _learners[learnerName]; 
+#endif //SHOGUN
+      }
 
-  /**
-  * Return the list of the learners currently registered.
-  * \param learnersList The list of the learners that will be filled.
-  * \date 21/11/2005
-  */
-  void getList(vector<string>& learnersList)
-  {
-     learnersList.clear();
-     learnersList.reserve(_learners.size());
-     map<string, BaseLearner*>::const_iterator it;
-     for (it = _learners.begin(); it != _learners.end(); ++it)
-        learnersList.push_back( it->first );
-  }
+      /**
+      * Return the list of the learners currently registered.
+      * \param learnersList The list of the learners that will be filled.
+      * \date 21/11/2005
+      */
+      void getList(vector<string>& learnersList)
+      {
+         learnersList.clear();
+         learnersList.reserve(_learners.size());
+         map<string, BaseLearner*>::const_iterator it;
+         for (it = _learners.begin(); it != _learners.end(); ++it)
+            learnersList.push_back( it->first );
+      }
 
-  virtual const char* get_name() const { return "LearnersRegs"; }
+   virtual const char* get_name() const { return "LearnersRegs"; }
 
-private:
-  map<string, BaseLearner*> _learners; //!< The map of the registered learners.
+   private:
+      map<string, BaseLearner*> _learners; //!< The map of the registered learners.
 };
 
-
-// ------------------------------------------------------------------------------
+   //////////////////////////////////////////////////////////////////////////
 
 /**
 * Generic base learner. 
 * All the weak learners used by AdaBoost should inherit from this one.
 * \todo Add a getAlpha for non-binary (ternary) base-classifiers, using line-search.
 */
+#ifdef SHOGUN
 class BaseLearner : public CSGObject
+#else //SHOGUN
+class BaseLearner
+#endif //SHOGUN
 {
 public:
 
@@ -545,35 +574,38 @@ private:
 
 };
 
-//////////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------------------
 
+} // end of namespace MultiBoost
 
-} // end of namespace shogun
-
-
-// MBFIXME these static variables below won't work in libshogun: people using
-// the library must call init_shogun before creating objects derived from
-// CSGObject
 
 /**
 * The macro that \b must be declared by all the Derived classes that can be used
 * for classification.
 * \see REGISTER_LEARNER_NAME
 */
+#ifdef SHOGUN
+#define REGISTER_LEARNER(X)
+#else // SHOGUN
 #define REGISTER_LEARNER(X) \
 struct Register_##X \
         { Register_##X() { BaseLearner::RegisteredLearners().addLearner(#X, new X()); } }; //\
         //static Register_##X r_##X;
-
+#endif // SHOGUN
 /**
 * Similarly to REGISTER_LEARNER this macro register the derived class, but in
 * this case a name can be specified, that will differ from the class name.
 * \see REGISTER_LEARNER
 */
+
+#ifdef SHOGUN
+#define REGISTER_LEARNER_NAME(NAME, X)
+#else // SHOGUN
 #define REGISTER_LEARNER_NAME(NAME, X) \
 struct Register_##X \
         { Register_##X() { BaseLearner::RegisteredLearners().addLearner(#NAME, new X()); } }; //\
         //static Register_##X r_##X;
+#endif // SHOGUN
 
 
 #endif // __BASE_LEARNER_H

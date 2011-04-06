@@ -42,17 +42,17 @@
 #include <functional> // for less
 #include <fstream>
 
-#include "classifier/boosting/IO/TxtParser.h"
-#include "classifier/boosting/IO/ArffParser.h"
+#include "IO/TxtParser.h"
+#include "IO/ArffParser.h"
 
-#include "classifier/boosting/Utils/Utils.h" // for white_tabs
-#include "classifier/boosting/IO/InputData.h"
+#include "Utils/Utils.h" // for white_tabs
+#include "IO/InputData.h"
 
 //#include <cassert>
 //#include <cmath>  //for fabs
 
 //
-namespace shogun {
+namespace MultiBoost {
 
 	// ------------------------------------------------------------------------
 	int		InputData::loadIndexSet( set< int > ind ) {
@@ -115,4 +115,4 @@ namespace shogun {
 		_nExamplesPerClass = this->_pData->getExamplesPerClass();
 	}
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

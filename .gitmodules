@@ -1,3 +1,6 @@
 [submodule "data"]
 	path = data
 	url = git://github.com/shogun-toolbox/shogun-data.git
+[submodule "src/libshogun/classifier/boosting"]
+	path = src/libshogun/classifier/boosting
+	url = git@github.com:fradav/MultiBoost.git

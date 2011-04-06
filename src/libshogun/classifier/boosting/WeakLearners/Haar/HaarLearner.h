@@ -44,7 +44,7 @@
 #include <vector>
 #include <iosfwd>
 
-#include "classifier/boosting/Utils/Utils.h" // for rect
+#include "Utils/Utils.h" // for rect
 
 
 using namespace std;
@@ -58,7 +58,7 @@ namespace nor_utils {
    class Args;
 }
 
-namespace shogun {
+namespace MultiBoost {
 
 // forward declarations to save some includes
 class HaarFeature;
@@ -197,6 +197,6 @@ protected:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __HAAR_LEARNER_H

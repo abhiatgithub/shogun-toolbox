@@ -8,11 +8,17 @@
 # Written (W) 2008-2009 Soeren Sonnenburg
 # Copyright (C) 2008-2009 Fraunhofer Institute FIRST and Max Planck Society
 
+import re
 class_str='class'
 types=["BOOL", "CHAR", "INT8", "UINT8", "INT16", "UINT16", "INT32", "UINT32",
 		"INT64", "UINT64", "FLOAT32", "FLOAT64", "FLOATMAX"] 
 config_tests=["HAVE_HDF5", "HAVE_JSON", "HAVE_XML", "HAVE_LAPACK", "USE_CPLEX",
 	"USE_SVMLIGHT", "USE_GLPK", "USE_LZO", "USE_GZIP", "USE_BZIP2", "USE_LZMA"]
+
+# Special map for multiboost learner classes, the key is the
+# "registered" class, value is the pair of the include file and
+# original MultiBoost Learner
+mb_classes = {}
 
 def check_class(line):
 	if not (line.find('public')==-1 and
@@ -75,18 +81,28 @@ def get_includes(classes):
 	from StringIO import StringIO
 	cmd=["find", ".", "-false"]
 	for c in classes:
-		cmd.extend(["-o", "-name", "%s.h" % c])
+		if c not in mb_classes:
+			cmd.extend(["-o", "-name", "%s.h" % c])
 	p = Popen(cmd, stdout=PIPE)
 	output = StringIO(p.communicate()[0])
 	includes=[]
 	for o in output:
 		includes.append('#include "%s"' % o.strip().lstrip('./'))
+	for c in mb_classes.keys():
+		includes.append('#include "%s"' % mb_classes[c][0].strip().lstrip('./'))
 	return includes
 
 def get_definitions(classes):
 	definitions=[]
 	for c in classes:
-		d="static CSGObject* __new_C%s(EPrimitiveType g) { return g == PT_NOT_GENERIC? new C%s(): NULL; }" % (c,c)
+		if c in mb_classes.keys():
+                    if mb_classes[c][1] != None:
+			d="class CMB_%s : public %s {};" % (c,mb_classes[c][1])
+                    else:
+			d="class CMB_%s : public %s {};" % (c,c)
+                    d= d + "\nstatic CSGObject* __new_CMB_%s(EPrimitiveType g) { return g == PT_NOT_GENERIC? new CMB_%s(): NULL; }" % (c,c)
+		else:
+			d="static CSGObject* __new_C%s(EPrimitiveType g) { return g == PT_NOT_GENERIC? new C%s(): NULL; }" % (c,c)
 		definitions.append(d)
 	return definitions
 
@@ -108,8 +124,10 @@ def get_template_definitions(classes):
 def get_struct(classes):
 	struct=[]
 	for c in classes:
-		s='{m_class_name: "%s", m_new_sgserializable: __new_C%s},' % (c,c)
-		struct.append(s)
+            if c in mb_classes.keys():
+                c = "MB_" + c                
+            s='{m_class_name: "%s", m_new_sgserializable: __new_C%s},' % (c,c)
+            struct.append(s)
 	return struct
 
 def extract_block(c, lines, start_line, stop_line, start_sym, stop_sym):
@@ -161,6 +179,34 @@ def extract_classes(HEADERS, template, blacklist):
 	"""
 	classes=list()
 	for fname in HEADERS:
+		# xxx MultiBoost exclude path we want to exclude all
+		# includes files from the script except for MultiBoost
+		# Learners
+		m = re.match("./classifier/boosting/(.*)$", fname)
+		if m != None and not template:
+			mb_class = m.group(1)
+			print "Match : ", mb_class
+			m = re.match("WeakLearners/(.*)", mb_class)
+			if m != None:
+				print "Learner found : ", m.group(1)
+				m = re.match("(.*)\.h$", fname)
+				cpp_file = m.group(1) + ".cpp"
+				print "cpp_file : ", cpp_file
+				lines=file(cpp_file).readlines()
+				line_nr=0
+				while line_nr<len(lines):
+					line=lines[line_nr]
+					m = re.match("[^/]*REGISTER_LEARNER(_NAME\(\W*(?P<cln>\w+)\W*,\W*(?P<or>\w+)\W*\)|\(\W*(?P<cl>\w+)\W*\))", line)
+					if m != None:
+						if m.group('cl') != None:
+							mb_classes[m.group('cl')] = [fname, None]
+							classes.append(m.group('cl'))
+						else:
+							mb_classes[m.group('cln')] = [fname, m.group('or')]
+							classes.append(m.group('cln'))
+						print "Matched register : ", m.group('cln'), " ", m.group('or') , " ", m.group('cl')
+					line_nr	= line_nr + 1
+			continue
 		lines=file(fname).readlines()
 		line_nr=0
 		while line_nr<len(lines):
@@ -232,7 +278,6 @@ if __name__=='__main__':
 	HEADERS=sys.argv[2:]
 
 	blacklist = get_blacklist()
-
 	classes = extract_classes(HEADERS, False, blacklist)
 	template_classes = extract_classes(HEADERS, True, blacklist)
 	includes = get_includes(classes+template_classes)

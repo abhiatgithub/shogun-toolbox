@@ -39,18 +39,18 @@
 #include <limits>
 #include <iomanip> // setprecision
 
-#include "classifier/boosting/Utils/Utils.h" // for addAndCheckExtension
-#include "classifier/boosting/Defaults.h" // for defaultLearner
-#include "classifier/boosting/IO/OutputInfo.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/IO/Serialization.h" // to save the found strong hypothesis
+#include "Utils/Utils.h" // for addAndCheckExtension
+#include "Defaults.h" // for defaultLearner
+#include "IO/OutputInfo.h"
+#include "IO/InputData.h"
+#include "IO/Serialization.h" // to save the found strong hypothesis
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/StrongLearners/AdaBoostMHLearner.h"
+#include "WeakLearners/BaseLearner.h"
+#include "StrongLearners/AdaBoostMHLearner.h"
 
-#include "classifier/boosting/Classifiers/AdaBoostMHClassifier.h"
+#include "Classifiers/AdaBoostMHClassifier.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	// -----------------------------------------------------------------------------------
 
@@ -154,7 +154,7 @@ namespace shogun {
 		InputData* pTrainingData = pWeakHypothesisSource->createInputData();
 		pTrainingData->initOptions(args);
 		pTrainingData->load(_trainFileName, IT_TRAIN, _verbose);
-
+		
 		// get the testing input data, and load it
 		InputData* pTestData = NULL;
 		if ( !_testFileName.empty() )
@@ -189,6 +189,12 @@ namespace shogun {
 
 			if (pTestData)
 				pOutInfo->outputError(pTestData, pConstantWeakHypothesis);
+
+			pOutInfo->outputWeightedError(pTrainingData);
+			
+			if (pTestData)
+				pOutInfo->outputWeightedError(pTestData);
+			
 			/*
 			pOutInfo->outputMargins(pTrainingData, pConstantWeakHypothesis);
 			pOutInfo->outputEdge(pTrainingData, pConstantWeakHypothesis);
@@ -209,6 +215,7 @@ namespace shogun {
 			if (pTestData)
 				pOutInfo->initialize(pTestData);
 		}
+		//cout << "Before serialization" << endl;
 		// reload the previously found weak learners if -resume is set. 
 		// otherwise just return 0
 		int startingIteration = resumeWeakLearners(pTrainingData);
@@ -238,17 +245,22 @@ namespace shogun {
 			BaseLearner* pWeakHypothesis = pWeakHypothesisSource->create();
 			pWeakHypothesis->initLearningOptions(args);
 			//pTrainingData->clearIndexSet();
-			pWeakHypothesis->setTrainingData(pTrainingData);
-			float energy = pWeakHypothesis->run();
 
-			if (_withConstantLearner) // check constant learner if user wants it
+			pWeakHypothesis->setTrainingData(pTrainingData);
+			
+			float energy = pWeakHypothesis->run();
+			
+			//float gamma = pWeakHypothesis->getEdge();
+			//cout << gamma << endl;
+
+			if ( (_withConstantLearner) || ( energy != energy ) ) // check constant learner if user wants it (if energi is nan, then we chose constant learner
 			{
 				BaseLearner* pConstantWeakHypothesis = pConstantWeakHypothesisSource->create() ;
 				pConstantWeakHypothesis->initLearningOptions(args);
 				pConstantWeakHypothesis->setTrainingData(pTrainingData);
 				float constantEnergy = pConstantWeakHypothesis->run();
 
-				if (constantEnergy <= energy) {
+				if ( (constantEnergy <= energy) || ( energy != energy ) ) {
 					delete pWeakHypothesis;
 					pWeakHypothesis = pConstantWeakHypothesis;
 				}
@@ -402,14 +414,18 @@ namespace shogun {
 	void AdaBoostMHLearner::doPosteriors(const nor_utils::Args& args)
 	{
 		AdaBoostMHClassifier classifier(args, _verbose);
-
-		// -posteriors <dataFile> <shypFile> <outFileName>
+		int numofargs = args.getNumValues( "posteriors" );
+		// -posteriors <dataFile> <shypFile> <outFile> <numIters>
 		string testFileName = args.getValue<string>("posteriors", 0);
 		string shypFileName = args.getValue<string>("posteriors", 1);
 		string outFileName = args.getValue<string>("posteriors", 2);
 		int numIterations = args.getValue<int>("posteriors", 3);
-
-		classifier.savePosteriors(testFileName, shypFileName, outFileName, numIterations);
+		int period = 0;
+		
+		if ( numofargs == 5 )
+			period = args.getValue<int>("posteriors", 4);
+		
+		classifier.savePosteriors(testFileName, shypFileName, outFileName, numIterations, period);
 	}
 
 	// -------------------------------------------------------------------------
@@ -825,6 +841,12 @@ namespace shogun {
 		pOutInfo->outputError(pTrainingData, pWeakHypothesis);
 		if (pTestData)
 			pOutInfo->outputError(pTestData, pWeakHypothesis);
+
+		pOutInfo->outputWeightedError(pTrainingData);
+		if (pTestData)
+			pOutInfo->outputWeightedError(pTestData);
+		
+		
 		/*
 		pOutInfo->outputMargins(pTrainingData, pWeakHypothesis);
 		pOutInfo->outputEdge(pTrainingData, pWeakHypothesis);
@@ -881,4 +903,4 @@ namespace shogun {
 
 	// -------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

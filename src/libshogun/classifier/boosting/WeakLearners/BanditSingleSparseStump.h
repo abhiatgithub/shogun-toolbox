@@ -41,12 +41,12 @@
 #define __BANDIT_SINGLE_SPARSE_STUMP_H
 
 //#include "WeakLearners/ClasswiseLearner.h"
-#include "classifier/boosting/WeakLearners/FeaturewiseLearner.h"
-#include "classifier/boosting/WeakLearners/BanditSingleStumpLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/IO/SortedData.h"
-#include "classifier/boosting/Bandits/Exp3G2.h"
+#include "WeakLearners/FeaturewiseLearner.h"
+#include "WeakLearners/BanditSingleStumpLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
+#include "IO/SortedData.h"
+#include "Bandits/Exp3G2.h"
 
 #include <vector>
 #include <fstream>
@@ -57,7 +57,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A \b single threshold decision stump learner. 
@@ -87,7 +87,7 @@ public:
    */
    virtual BaseLearner* subCreate() { 
 	   BaseLearner* retLearner = new BanditSingleSparseStump();
-	   static_cast< BanditSingleStumpLearner* >(retLearner)->setBanditAlgoObject( _banditAlgo );
+	   dynamic_cast< BanditSingleStumpLearner* >(retLearner)->setBanditAlgoObject( _banditAlgo );
 	   return retLearner;
    }
 
@@ -107,6 +107,6 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __SINGLE_STUMP_LEARNER_H

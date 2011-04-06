@@ -40,8 +40,8 @@
 #ifndef __UCTUTILS_H
 #define __UCTUTILS_H
 
-#include "classifier/boosting/WeakLearners/FeaturewiseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
+#include "WeakLearners/FeaturewiseLearner.h"
+#include "Utils/Args.h"
 
 #include <vector>
 #include <fstream>
@@ -55,7 +55,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 	enum updateType 
 	{
@@ -295,6 +295,6 @@ namespace shogun {
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif

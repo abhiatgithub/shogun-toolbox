@@ -40,7 +40,7 @@
 #ifndef KMEANS_H
 #define KMEANS_H
 
-#include "classifier/boosting/Kmeans/KM_ANN.h"			// basic definitions
+#include "KM_ANN.h"			// basic definitions
 
 using namespace std;			// make standard names available
 

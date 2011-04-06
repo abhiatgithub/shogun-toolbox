@@ -36,10 +36,10 @@
 #include "EnumLearner3.h"
 #include <limits>
 #include <cstdlib>
-#include "classifier/boosting/Kmeans/KMlocal.h"			// k-means algorithms
-#include "classifier/boosting/IO/Serialization.h"
+#include "Kmeans/KMlocal.h"			// k-means algorithms
+#include "IO/Serialization.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 	//REGISTER_LEARNER_NAME(SingleStump, EnumLearner3)
 	REGISTER_LEARNER(EnumLearner3)
@@ -426,4 +426,4 @@ namespace shogun {
 		pEnumLearner3->_u = _u;
 	}
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

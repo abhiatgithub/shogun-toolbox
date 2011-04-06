@@ -42,14 +42,14 @@
 #include <functional> // for less
 #include <fstream>
 
-#include "classifier/boosting/IO/TxtParser.h"
-#include "classifier/boosting/IO/ArffParser.h"
-#include "classifier/boosting/IO/ArffParserBzip2.h"
-#include "classifier/boosting/IO/LSHTCParser.h"
-#include "classifier/boosting/IO/SVMLightParser.h"
+#include "IO/TxtParser.h"
+#include "IO/ArffParser.h"
+#include "IO/ArffParserBzip2.h"
+#include "IO/LSHTCParser.h"
+#include "IO/SVMLightParser.h"
 
-#include "classifier/boosting/Utils/Utils.h" // for white_tabs
-#include "classifier/boosting/IO/RawData.h"
+#include "Utils/Utils.h" // for white_tabs
+#include "IO/RawData.h"
 
 //#include <cassert>
 //#include <cmath>  //for fabs
@@ -57,7 +57,7 @@
 //extern "C" void solveEquationSystem( double* X, double* b, int* N );
 
 //
-namespace shogun {
+namespace MultiBoost {
 
 
 
@@ -541,6 +541,6 @@ namespace shogun {
 #endif // MB_DEBUG
 
 
-} //end namespace shogun
+} //end namespace MultiBoost
 
 

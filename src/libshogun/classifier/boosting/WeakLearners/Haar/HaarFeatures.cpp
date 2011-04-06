@@ -35,11 +35,11 @@
 
 
 #include "HaarFeatures.h"
-#include "classifier/boosting/IO/HaarData.h" // for areaWidth() and areaHeight()
+#include "IO/HaarData.h" // for areaWidth() and areaHeight()
 
 #include <algorithm>
 
-namespace shogun {
+namespace MultiBoost {
 
 // ------------------------------------------------------------------------------
 
@@ -400,4 +400,4 @@ float HaarFeature_4SQ::getValue(const vector<float>& intImage, const nor_utils::
 
 // ------------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

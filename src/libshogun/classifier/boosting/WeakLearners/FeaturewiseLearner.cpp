@@ -37,14 +37,14 @@
 #include <limits> // for numeric_limits<>
 #include <cmath>
 
-#include "classifier/boosting/StrongLearners/AdaBoostMHLearner.h"
-#include "classifier/boosting/WeakLearners/FeaturewiseLearner.h"
+#include "StrongLearners/AdaBoostMHLearner.h"
+#include "WeakLearners/FeaturewiseLearner.h"
 
-#include "classifier/boosting/Utils/Utils.h"
-#include "classifier/boosting/IO/Serialization.h"
-#include "classifier/boosting/IO/SortedData.h"
+#include "Utils/Utils.h"
+#include "IO/Serialization.h"
+#include "IO/SortedData.h"
 
-namespace shogun {
+namespace MultiBoost {
 
 // ------------------------------------------------------------------------------
 
@@ -129,4 +129,4 @@ float FeaturewiseLearner::phi(InputData* pData, int idx, int classIdx) const
 
 // -----------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

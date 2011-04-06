@@ -38,13 +38,13 @@
 #include <vector>
 #include <cassert>
 
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Others/Rates.h"
-#include "classifier/boosting/IO/NameMap.h"
+#include "IO/InputData.h"
+#include "Others/Rates.h"
+#include "IO/NameMap.h"
 
 //To be checked with sparse with BreastCancer
 
-namespace shogun {
+namespace MultiBoost {
 
 // ------------------------------------------------------------------------------
 
@@ -116,4 +116,4 @@ float ConstantAlgorithm::findConstant(InputData* pData,
 
 // ------------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

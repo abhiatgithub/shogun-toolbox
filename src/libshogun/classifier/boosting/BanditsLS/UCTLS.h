@@ -40,8 +40,8 @@
 #ifndef __UCT_H
 #define __UCT_H
 
-#include "classifier/boosting/BanditsLS/GenericBanditAlgorithmLS.h"
-#include "classifier/boosting/Utils/UCTutils.h"
+#include "GenericBanditAlgorithmLS.h"
+#include "Utils/UCTutils.h"
 
 using namespace std;
 
@@ -49,7 +49,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 	
 //////////////////////////////////////////////////////////////////////////
 
@@ -121,6 +121,6 @@ KeyType UCT<BaseType,KeyType>::getNextAction( KeyType defaultValue )
 
 //----------------------------------------------------------------
 //----------------------------------------------------------------
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif

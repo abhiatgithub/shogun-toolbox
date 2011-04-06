@@ -37,7 +37,7 @@
 
 
 //
-namespace shogun {
+namespace MultiBoost {
 
 // ------------------------------------------------------------------------
 
@@ -54,4 +54,4 @@ void EncodeData::addExample(Example example)
 	_pData->addExample( example );
 }
 
-} // end of namespace shogun
+} // end of namespace MultiBoost

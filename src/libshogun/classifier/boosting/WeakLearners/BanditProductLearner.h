@@ -36,12 +36,12 @@
 #ifndef __BANDIT_PRODUCT_LEARNER_H
 #define __BANDIT_PRODUCT_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/BaseLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/BanditsLS/GenericBanditAlgorithmLS.h"
-#include "classifier/boosting/WeakLearners/BanditTreeLearner.h"
-#include "classifier/boosting/WeakLearners/BanditLearner.h"
+#include "BaseLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
+#include "BanditsLS/GenericBanditAlgorithmLS.h"
+#include "WeakLearners/BanditTreeLearner.h"
+#include "WeakLearners/BanditLearner.h"
 
 #include <vector>
 #include <fstream>
@@ -52,7 +52,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A learner that loads a set of base learners, and boosts on the top of them. 
@@ -109,7 +109,7 @@ public:
    */
    virtual BaseLearner* subCreate() { 
 		BaseLearner* retLearner = new BanditProductLearner();
-		static_cast< BanditProductLearner* >(retLearner)->setBanditAlgoObject( static_cast< BanditProductLearner* >(this)->getBanditAlgoObject() );
+		dynamic_cast< BanditProductLearner* >(retLearner)->setBanditAlgoObject( static_cast< BanditProductLearner* >(this)->getBanditAlgoObject() );
 		return retLearner;  
    }
 
@@ -168,7 +168,6 @@ public:
    */
    virtual void subCopyState(BaseLearner *pBaseLearner);
 
-   virtual const char* get_name() const { return "BanditProductLearner"; }
 
 protected:
 
@@ -182,6 +181,6 @@ private:
 
 //////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __PRODUCT_LEARNER_H

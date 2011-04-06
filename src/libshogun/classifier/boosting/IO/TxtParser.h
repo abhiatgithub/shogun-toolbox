@@ -40,11 +40,11 @@
 #ifndef __TXT_PARSER_H
 #define __TXT_PARSER_H
 
-#include "classifier/boosting/IO/GenericParser.h"
+#include "IO/GenericParser.h"
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * Parse simple text data.
@@ -96,6 +96,6 @@ private:
    int      _numAttributes;
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __TXT_PARSER_H

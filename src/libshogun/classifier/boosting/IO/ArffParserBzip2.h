@@ -44,13 +44,13 @@
 
 #include <fstream>
 #include <sstream>
-#include "classifier/boosting/IO/GenericParser.h"
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Bzip2/Bzip2Wrapper.h"
+#include "GenericParser.h"
+#include "NameMap.h"
+#include "InputData.h"
+#include "Bzip2/Bzip2Wrapper.h"
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 class ArffParserBzip2 : public GenericParser
 {
@@ -172,6 +172,6 @@ inline string ArffParserBzip2::readName(Bzip2WrapperReader& in)
 // -----------------------------------------------------------------------------
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ARFF_PARSER_H

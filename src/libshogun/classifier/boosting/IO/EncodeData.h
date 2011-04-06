@@ -41,14 +41,14 @@
 #ifndef __ENCODE_DATA_H
 #define __ENCODE_DATA_H
 
-#include "classifier/boosting/IO/InputData.h"
+#include "IO/InputData.h"
 
 #include <vector>
 #include <utility> // for pair
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +83,6 @@ public:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __ENCODE_DATA_H

@@ -40,14 +40,14 @@
 #ifndef __PARASITE_DATA_H
 #define __PARASITE_DATA_H
 
-#include "classifier/boosting/Bandits/InputData.h"
-#include "classifier/boosting/Bandits/WeakLearners/BaseLearner.h"
+#include "InputData.h"
+#include "WeakLearners/BaseLearner.h"
 
 #include <vector>
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,6 +82,6 @@ protected:
 
 };
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __PARASITE_DATA_H

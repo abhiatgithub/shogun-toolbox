@@ -49,8 +49,8 @@
 #include <sstream>
 #include <set>
 
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "IO/NameMap.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -58,7 +58,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 
 class InnerNode {

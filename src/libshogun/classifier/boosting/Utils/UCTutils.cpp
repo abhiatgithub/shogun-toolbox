@@ -32,13 +32,13 @@
 *
 */
 
-#include "classifier/boosting/Utils/UCTutils.h"
+#include "Utils/UCTutils.h"
 #include <cctype> // for isspace
 #include <algorithm>
 #include <sstream>
 #include <fstream>
 
-namespace shogun {
+namespace MultiBoost {
 
 // ----------------------------------------------------------------
 

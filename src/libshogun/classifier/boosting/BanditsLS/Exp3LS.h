@@ -43,8 +43,8 @@
 //#include <pair>
 #include <vector>
 #include <math.h> //for pow
-#include "classifier/boosting/BanditsLS/GenericBanditAlgorithmLS.h"
-#include "classifier/boosting/Utils/Utils.h"
+#include "GenericBanditAlgorithmLS.h"
+#include "Utils/Utils.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -52,7 +52,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /*
 The implementation is based on this article:
@@ -271,6 +271,6 @@ BaseType Exp3LS<BaseType,KeyType>::getPValue( KeyType key )
 //----------------------------------------------------------------
 
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif

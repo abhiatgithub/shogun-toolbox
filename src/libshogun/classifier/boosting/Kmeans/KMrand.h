@@ -26,7 +26,7 @@
 //----------------------------------------------------------------------
 #include <cstdlib>			// standard C++ includes
 #include <math.h>			// math routines
-#include "classifier/boosting/Kmeans/KMeans.h"			// KMeans includes
+#include "KMeans.h"			// KMeans includes
 
 //----------------------------------------------------------------------
 //  Globals

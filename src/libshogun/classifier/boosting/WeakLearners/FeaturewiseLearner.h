@@ -41,9 +41,9 @@
 #ifndef __FEATUREWISE_LEARNER_H
 #define __FEATUREWISE_LEARNER_H
 
-#include "classifier/boosting/WeakLearners/AbstainableLearner.h"
-#include "classifier/boosting/Utils/Args.h"
-#include "classifier/boosting/IO/InputData.h"
+#include "WeakLearners/AbstainableLearner.h"
+#include "Utils/Args.h"
+#include "IO/InputData.h"
 
 #include <vector>
 #include <fstream>
@@ -54,7 +54,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace shogun {
+namespace MultiBoost {
 
 /**
 * A generic featurewise learner. It represents all weak learners that search all or
@@ -62,7 +62,7 @@ namespace shogun {
 *
 * \date 19/07/2006
 */
-class FeaturewiseLearner : public AbstainableLearner
+class FeaturewiseLearner : public virtual AbstainableLearner
 {
 public:
 
@@ -169,6 +169,6 @@ protected:
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __FEATUREWISE_LEARNER_H

@@ -43,14 +43,14 @@
 #include <vector>
 #include <cassert>
 
-#include "classifier/boosting/IO/InputData.h"
-#include "classifier/boosting/Others/Rates.h"
-#include "classifier/boosting/IO/NameMap.h"
-#include "classifier/boosting/Algorithms/ConstantAlgorithm.h"
+#include "IO/InputData.h"
+#include "Others/Rates.h"
+#include "IO/NameMap.h"
+#include "Algorithms/ConstantAlgorithm.h"
 
 using namespace std;
 
-namespace shogun {
+namespace MultiBoost {
 
 	//////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ namespace shogun {
 			vector<float>& thresholds,
 			vector<sRates>* pMu = NULL, vector<float>* pV = NULL);
 
-	private:
+	protected:
 
 		vector<float> _halfEdges; //!< half of the class-wise edges
 		vector<float> _constantHalfEdges; //!< half of the class-wise edges of the constant classifier
@@ -470,6 +470,6 @@ namespace shogun {
 
 	//////////////////////////////////////////////////////////////////////////
 
-} // end of namespace shogun
+} // end of namespace MultiBoost
 
 #endif // __STUMP_ALGORITHM_H
