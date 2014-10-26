@@ -52,13 +52,6 @@ SET(EXAMPLES
 	labels_binary_fit_sigmoid
 	mathematics_confidence_intervals
 	clustering_kmeans
-	base_parameter_map
-	base_load_file_parameters
-	base_load_all_file_parameters
-	base_map_parameters
-	base_migration_type_conversion
-	base_migration_dropping_and_new
-	base_migration_multiple_dependencies
 	splitting_stratified_crossvalidation
 	splitting_standard_crossvalidation
 	library_set
@@ -100,7 +93,6 @@ SET(EXAMPLES
 	library_serialization
 	classifier_svmlight_string_features_precomputed_kernel
 	classifier_mkl_svmlight_modelselection_bug
-	base_migration_new_buggy
 	regression_libsvr
 	classifier_multiclass_prob_heuristics
 	streaming_onlineliblinear_sparse
