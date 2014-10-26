@@ -23,8 +23,6 @@
 #include <shogun/preprocessor/SortWordString.h>
 #include <shogun/preprocessor/SortUlongString.h>
 #include <shogun/features/RealFileFeatures.h>
-#include <shogun/features/TOPFeatures.h>
-#include <shogun/features/FKFeatures.h>
 #include <shogun/features/StringFeatures.h>
 #include <shogun/features/DenseFeatures.h>
 #include <shogun/features/SparseFeatures.h>

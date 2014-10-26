@@ -13,7 +13,6 @@
 #include <shogun/ui/GUIClassifier.h>
 #include <shogun/ui/GUIDistance.h>
 #include <shogun/ui/GUIFeatures.h>
-#include <shogun/ui/GUIHMM.h>
 #include <shogun/ui/GUIKernel.h>
 #include <shogun/ui/GUILabels.h>
 #include <shogun/ui/GUIMath.h>
@@ -326,92 +325,6 @@ class CSGInterface : public CSGObject
 		/** embed features */
 		bool cmd_embed();
 
-		/** create new HMM */
-		bool cmd_new_hmm();
-		/** load HMM from file */
-		bool cmd_load_hmm();
-		/** save HMM to file */
-		bool cmd_save_hmm();
-		/** HMM classify */
-		bool cmd_hmm_classify();
-		/** HMM classify for a single example */
-		bool cmd_hmm_classify_example();
-		/** LinearHMM classify for 1-class examples */
-		bool cmd_one_class_linear_hmm_classify();
-		/** HMM classify for 1-class examples */
-		bool cmd_one_class_hmm_classify();
-		/** HMM classify for a single 1-class example */
-		bool cmd_one_class_hmm_classify_example();
-		/** output HMM */
-		bool cmd_output_hmm();
-		/** output HMM defined */
-		bool cmd_output_hmm_defined();
-		/** get HMM likelihood */
-		bool cmd_hmm_likelihood();
-		/** likelihood */
-		bool cmd_likelihood();
-		/** save HMM likelihoods to file */
-		bool cmd_save_likelihood();
-		/** get HMM's Viterbi Path */
-		bool cmd_get_viterbi_path();
-		/** train viterbi defined */
-		bool cmd_viterbi_train_defined();
-		/** train viterbi */
-		bool cmd_viterbi_train();
-		/** train baum welch */
-		bool cmd_baum_welch_train();
-		/** train defined baum welch */
-		bool cmd_baum_welch_train_defined();
-		/** train baum welch trans */
-		bool cmd_baum_welch_trans_train();
-		/** linear train */
-		bool cmd_linear_train();
-		/** save path to file */
-		bool cmd_save_path();
-		/** append HMM */
-		bool cmd_append_hmm();
-		/** append model (like HMM, but for CmdlineInterface */
-		bool cmd_append_model();
-		/** set HMM */
-		bool cmd_set_hmm();
-		/** set HMM as */
-		bool cmd_set_hmm_as();
-		/** get HMM */
-		bool cmd_get_hmm();
-		/** set chop value */
-		bool cmd_set_chop();
-		/** set pseudo value */
-		bool cmd_set_pseudo();
-		/** load definitions from file */
-		bool cmd_load_definitions();
-		/** convergence criteria */
-		bool cmd_convergence_criteria();
-		/** normalize HMM */
-		bool cmd_normalize();
-		/** add HMM states */
-		bool cmd_add_states();
-		/** permutation entropy */
-		bool cmd_permutation_entropy();
-		/** compute HMM relative entropy */
-		bool cmd_relative_entropy();
-		/** compute HMM entropy */
-		bool cmd_entropy();
-		/** create new plugin estimator */
-		bool cmd_new_plugin_estimator();
-		/** train plugin estimator */
-		bool cmd_train_estimator();
-		/** plugin estimate classify one example */
-		bool cmd_plugin_estimate_classify_example();
-		/** plugin estimate classify */
-		bool cmd_plugin_estimate_classify();
-		/** set plugin estimate */
-		bool cmd_set_plugin_estimate();
-		/** get plugin estimate */
-		bool cmd_get_plugin_estimate();
-		/** best path */
-		bool cmd_best_path();
-		/** best path 2struct */
-		bool cmd_best_path_2struct();
 		/**
 		 * -assemble plif struct from a bunch of
 		 *  arrays of the same length corresponding
@@ -1000,8 +913,6 @@ class CSGInterface : public CSGObject
 		CGUIDistance* ui_distance;
 		/** ui features */
 		CGUIFeatures* ui_features;
-		/** ui hmm */
-		CGUIHMM* ui_hmm;
 		/** ui kernel */
 		CGUIKernel* ui_kernel;
 		/** ui labels */

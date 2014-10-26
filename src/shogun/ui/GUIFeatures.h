@@ -17,8 +17,6 @@
 #include <shogun/labels/Labels.h>
 #include <shogun/features/Features.h>
 #include <shogun/features/RealFileFeatures.h>
-#include <shogun/features/TOPFeatures.h>
-#include <shogun/features/FKFeatures.h>
 #include <shogun/features/StringFeatures.h>
 #include <shogun/features/DenseFeatures.h>
 #include <shogun/features/SparseFeatures.h>
@@ -145,16 +143,6 @@ class CGUIFeatures : public CSGObject
 		CDenseFeatures<float64_t>* convert_simple_word_to_simple_salzberg(
 			CDenseFeatures<uint16_t>* src);
 
-		/** convert string word to simple top
-		 * @param src
-		 */
-		CTOPFeatures* convert_string_word_to_simple_top(
-			CStringFeatures<uint16_t>* src);
-		/** convert string word to simple fk
-		 * @param src
-		 */
-		CFKFeatures* convert_string_word_to_simple_fk(
-			CStringFeatures<uint16_t>* src);
 		/** convert sparse real to simple real
 		 * @param src
 		 */

@@ -35,8 +35,6 @@
 #include <shogun/labels/MultilabelLabels.h>
 #include <shogun/features/RealFileFeatures.h>
 #include <shogun/features/RealFileFeatures.h>
-#include <shogun/features/FKFeatures.h>
-#include <shogun/features/TOPFeatures.h>
 #include <shogun/features/SNPFeatures.h>
 #include <shogun/features/WDFeatures.h>
 #include <shogun/features/HashedWDFeatures.h>

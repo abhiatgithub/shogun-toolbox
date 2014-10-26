@@ -86,8 +86,6 @@ PROTOCOLS_DENSELABELS(CRegressionLabels, RegressionLabels, float64_t, "d\0", NPY
 %rename(LatentLabels) CLatentLabels;
 %rename(MultilabelLabels) CMultilabelLabels;
 %rename(RealFileFeatures) CRealFileFeatures;
-%rename(FKFeatures) CFKFeatures;
-%rename(TOPFeatures) CTOPFeatures;
 %rename(SNPFeatures) CSNPFeatures;
 %rename(WDFeatures) CWDFeatures;
 %rename(HashedWDFeatures) CHashedWDFeatures;
@@ -511,8 +509,6 @@ namespace shogun
 %include <shogun/labels/MultilabelLabels.h>
 
 %include <shogun/features/RealFileFeatures.h>
-%include <shogun/features/FKFeatures.h>
-%include <shogun/features/TOPFeatures.h>
 %include <shogun/features/SNPFeatures.h>
 %include <shogun/features/WDFeatures.h>
 %include <shogun/features/HashedWDFeatures.h>
