@@ -14,7 +14,6 @@
 #include <shogun/io/SGIO.h>
 #include <shogun/base/Version.h>
 #include <shogun/base/Parameter.h>
-#include <shogun/base/ParameterMap.h>
 #include <shogun/base/DynArray.h>
 #include <shogun/lib/Map.h>
 #include <shogun/lib/SGVector.h>
@@ -134,7 +133,6 @@ CSGObject::~CSGObject()
 	delete m_parameters;
 	delete m_model_selection_parameters;
 	delete m_gradient_parameters;
-	delete m_parameter_map;
 }
 
 CSGObject * CSGObject::shallow_copy() const
@@ -415,7 +413,6 @@ void CSGObject::init()
 	m_parameters = new Parameter();
 	m_model_selection_parameters = new Parameter();
 	m_gradient_parameters=new Parameter();
-	m_parameter_map=new ParameterMap();
 	m_generic = PT_NOT_GENERIC;
 	m_load_pre_called = false;
 	m_load_post_called = false;

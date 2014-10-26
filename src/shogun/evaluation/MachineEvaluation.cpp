@@ -16,7 +16,6 @@
 #include <shogun/evaluation/Evaluation.h>
 #include <shogun/evaluation/SplittingStrategy.h>
 #include <shogun/base/Parameter.h>
-#include <shogun/base/ParameterMap.h>
 #include <shogun/mathematics/Statistics.h>
 
 using namespace shogun;
@@ -99,18 +98,6 @@ void CMachineEvaluation::init()
 	SG_ADD(&m_autolock, "m_autolock",
 			"Whether machine should automatically try to be locked before ",
 			MS_NOT_AVAILABLE);
-
-	/* new parameter from param version 0 to 1 */
-	m_parameter_map->put(
-			new SGParamInfo("m_do_unlock", CT_SCALAR, ST_NONE, PT_BOOL, 1),
-			new SGParamInfo()
-	);
-
-	/* new parameter from param version 0 to 1 */
-	m_parameter_map->put(
-			new SGParamInfo("m_autolock", CT_SCALAR, ST_NONE, PT_BOOL, 1),
-			new SGParamInfo()
-	);
 }
 
 CMachine* CMachineEvaluation::get_machine() const

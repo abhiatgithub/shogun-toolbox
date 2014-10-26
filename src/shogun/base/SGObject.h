@@ -29,7 +29,6 @@ namespace shogun
 class SGIO;
 class Parallel;
 class Parameter;
-class ParameterMap;
 class SGParamInfo;
 class CSerializableFile;
 
@@ -347,9 +346,6 @@ public:
 
 	/** parameters wrt which we can compute gradients */
 	Parameter* m_gradient_parameters;
-
-	/** map for different parameter versions */
-	ParameterMap* m_parameter_map;
 
 	/** Hash of parameter values*/
 	uint32_t m_hash;
